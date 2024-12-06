@@ -19,8 +19,8 @@
     text-align: center;
 
     h1 {
-      font-size: 128px;
-      background: linear-gradient(to right, #217bfe, #e55571);
+      font-size: 100px;
+      background: linear-gradient(to right, #7051f2, #291a68);
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
@@ -39,7 +39,7 @@
     }
     a {
       padding: 15px 25px;
-      background-color: #217bfe;
+      background-color: #291a68;
       color: white;
       border-radius: 20px;
       font-size: 14px;
@@ -47,7 +47,7 @@
 
       &:hover {
         background-color: white;
-        color: #217bfe;
+        color: #291a68;
       }
     }
   }
@@ -63,8 +63,8 @@
       align-items: center;
       justify-content: center;
       background-color: #140e2d;
-      border-radius: 50px;
-      width: 80%;
+      border-radius: 60px;
+      width: 90%;
       height: 50%;
       position: relative;
 
@@ -79,9 +79,10 @@
 
         .bg {
           background-image: url("/bg.png");
-          opacity: 0.2;
+          opacity: 0.1;
           width: 200%;
           height: 100%;
+
           background-size: auto 100%;
           animation: 8s ease-in-out infinite alternate slideBg;
         }

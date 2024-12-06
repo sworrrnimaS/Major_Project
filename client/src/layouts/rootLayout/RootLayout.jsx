@@ -1,5 +1,6 @@
 import { Link, Outlet } from "react-router-dom";
 import { ClerkProvider, SignedIn, UserButton } from "@clerk/clerk-react";
+import "./rootLayout.css";
 
 // Import your Publishable Key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;

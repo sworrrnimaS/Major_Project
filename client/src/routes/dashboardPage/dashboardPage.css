@@ -23,14 +23,6 @@
         width: 64px;
         height: 64px;
       }
-
-      h1 {
-        font-size: 64px;
-        background: linear-gradient(to right, #217bfe, #e55571);
-        background-clip: text;
-        -webkit-background-clip: text;
-        color: transparent;
-      }
     }
 
     .options {
@@ -46,16 +38,16 @@
         flex-direction: column;
         gap: 10px;
         font-weight: 300;
-        font-size: 14px;
+        font-size: 18px;
         padding: 20px;
         border: 1px solid #555;
         border-radius: 20px;
 
-        img {
+        /* img {
           width: 40px;
           height: 40px;
           object-fit: cover;
-        }
+        } */
       }
     }
   }
@@ -94,7 +86,11 @@
         justify-content: center;
         margin-right: 20px;
 
-        img {
+        /* img {
+          width: 16px;
+          height: 16px;
+        } */
+        .upIcon {
           width: 16px;
           height: 16px;
         }

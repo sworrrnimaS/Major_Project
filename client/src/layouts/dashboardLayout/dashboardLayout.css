@@ -13,3 +13,10 @@
     background-color: #12101b;
   }
 }
+
+.dna-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+}

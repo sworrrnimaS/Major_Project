@@ -118,9 +118,11 @@ const NewPrompt = ({ data }) => {
         <input
           type="text"
           name="text"
+          onChange={(e) => setQuestion(e.target.value)}
+          value={question}
           placeholder="Ask me anything about commercial banks in Nepal"
         />
-        <button type="submit" disabled={mutation.isLoading}>
+        <button type="submit" disabled={!question || mutation.isLoading}>
           <MoveUp className="upIcon" />
         </button>
       </form>

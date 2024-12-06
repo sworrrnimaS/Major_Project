@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Crown } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
+import "./chatList.css";
 
 const ChatList = () => {
   const { isPending, error, data } = useQuery({

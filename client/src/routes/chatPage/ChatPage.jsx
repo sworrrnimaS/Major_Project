@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import NewPrompt from "../../components/newPrompt/NewPrompt";
 import { useLocation } from "react-router-dom";
+import "./chatPage.css";
 
 const ChatPage = () => {
   const path = useLocation().pathname;
@@ -31,7 +32,7 @@ const ChatPage = () => {
                 </div>
               ))}
 
-          <NewPrompt />
+          {data && <NewPrompt data={data} />}
         </div>
       </div>
     </div>

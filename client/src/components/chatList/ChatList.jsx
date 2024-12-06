@@ -1,7 +1,16 @@
 import { Link } from "react-router-dom";
 import { Crown } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 
 const ChatList = () => {
+  const { isPending, error, data } = useQuery({
+    queryKey: ["userChats"],
+    queryFn: () =>
+      fetch(`${import.meta.env.VITE_API_URL}/userchatwalaapi`, {
+        credentials: "include",
+      }).then((res) => res.json()),
+  });
+
   return (
     <div className="chatList">
       <span className="title">DASHBOARD</span>
@@ -10,10 +19,15 @@ const ChatList = () => {
       <hr />
       <span className="title">RECENT CHATS</span>
       <div className="list">
-        <Link to="/">Recent Chats</Link>
-        <Link to="/">Recent Chats</Link>
-        <Link to="/">Recent Chats</Link>
-        <Link to="/">Recent Chats</Link>
+        {isPending
+          ? "Loading..."
+          : error
+          ? "Something went wrong!"
+          : data?.map((chat) => (
+              <Link to={`/dashboard/chats/${chat._id}`} key={chat.id}>
+                {chat.title}
+              </Link>
+            ))}
       </div>
       <hr />
       <div className="upgrade">

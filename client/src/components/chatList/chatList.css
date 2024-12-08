@@ -1,3 +1,27 @@
+.new-chat {
+  display: flex;
+
+  justify-content: space-around;
+  border-radius: 10px;
+  font-weight: bolder;
+  margin-bottom: 20px;
+  background-color: #291a68;
+  &:hover {
+    background-color: #2c2937;
+  }
+}
+
+.new-chat svg {
+  margin-left: -40px;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20vh;
+}
+
 .chatList {
   display: flex;
   flex-direction: column;
@@ -37,12 +61,12 @@
     margin-top: auto;
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 12px;
+    gap: 12px;
+    font-size: 14px;
 
     img {
-      width: 24px;
-      height: 24px;
+      width: 30px;
+      height: 30px;
     }
 
     .texts {
@@ -56,18 +80,19 @@
         align-items: center; /* items-center */
         justify-content: center; /* justify-center */
         gap: 0.5rem; /* gap-2 */
-        margin-bottom: 1rem; /* mb-4 */
-        padding: 0.5rem 1rem; /* px-4 py-2 */
-        font-size: 0.875rem; /* text-sm */
-        font-weight: 500; /* font-medium */
-        color: #4f46e5; /* text-indigo-600 */
-        background-color: #eef2ff; /* bg-indigo-50 */
+        margin-bottom: 0.25rem; /* mb-4 */
+        padding: 0.5rem 0.5rem; /* px-4 py-2 */
+        font-size: 1rem; /* text-sm */
+        font-weight: 700; /* font-medium */
+        background-color: #291a68; /* text-indigo-600 */
+        color: white; /* bg-indigo-50 */
         border-radius: 0.5rem; /* rounded-lg */
         transition: background-color 0.2s; /* transition-colors */
       }
 
       .upgrade-button:hover {
         background-color: #e0e7ff; /* hover:bg-indigo-100 */
+        color: #2c2937;
       }
 
       .upgrade-button .icon {

@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom";
-import { Crown, History } from "lucide-react";
+import { Crown, History, SquarePen } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import "./chatList.css";
 import { DNA } from "react-loader-spinner";
+import { useState } from "react";
+import UpgradeModal from "../upgradeModal/UpgradeModal";
 
 const ChatList = () => {
+  const [showModal, setShowModal] = useState(false);
   const { isPending, error, data } = useQuery({
     queryKey: ["userChats"],
     queryFn: () =>
@@ -15,21 +18,27 @@ const ChatList = () => {
 
   return (
     <div className="chatList">
+      <Link to={`/dashboard/chats/newID`} className="new-chat">
+        New Chat
+        <SquarePen />
+      </Link>
       <span className="title">DASHBOARD</span>
-      <Link to="/dashboard"></Link>
-      <Link to="/">Explore BankHelp AI</Link>
+
+      <Link to="/dashboard">Explore BankHelp AI</Link>
       <hr />
       <span className="title">RECENT CHATS</span>
       <div className="list">
         {isPending ? (
-          <DNA
-            visible={true}
-            height="40"
-            width="40"
-            ariaLabel="dna-loading"
-            wrapperStyle={{}}
-            wrapperClass="dna-wrapper"
-          />
+          <div className="loader">
+            <DNA
+              visible={true}
+              height="60"
+              width="60"
+              ariaLabel="dna-loading"
+              wrapperStyle={{}}
+              wrapperClass="dna-wrapper"
+            />
+          </div>
         ) : error ? (
           "Something went wrong!"
         ) : (
@@ -45,13 +54,14 @@ const ChatList = () => {
       <div className="upgrade">
         <img src="/logo.png" alt="" />
         <div className="texts">
-          <button className="upgradeButton">
+          <button className="upgrade-button" onClick={() => setShowModal(true)}>
             <Crown className="icon" />
             Upgrade Plan
           </button>
           <span>Get unlimited access to all features</span>
         </div>
       </div>
+      {showModal && <UpgradeModal onClose={() => setShowModal(false)} />}
     </div>
   );
 };

@@ -1,0 +1,134 @@
+/* General styles for the modal overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(14, 12, 22, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+/* Modal container */
+.modal-container {
+  background: conic-gradient(from 45deg at top right, #4338ca, #2c2937 60%);
+  border-radius: 0.5rem; /* rounded-lg */
+  padding: 1.5rem; /* p-6 */
+  width: 100%;
+  max-width: 48rem; /* max-w-2xl */
+  margin: 0 1rem; /* mx-4 */
+}
+
+/* Header styles */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem; /* mb-6 */
+}
+
+.modal-title {
+  color: #fbf8ff;
+  font-size: 1.25rem; /* text-xl */
+  font-weight: 600; /* font-semibold */
+}
+
+.close-button {
+  color: #fbf8ff;
+  transition: color 0.2s;
+  cursor: pointer;
+  padding: 0.1rem;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  background-color: transparent;
+}
+
+.close-button:hover {
+  background-color: #4338ca;
+  color: #fbf8ff;
+}
+
+/* Plans grid */
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* md:grid-cols-2 */
+  gap: 1.5rem; /* gap-6 */
+}
+
+/* Individual plan card */
+.plan-card {
+  border: 1px solid #fbf8ff; /* border-gray-200 */
+  border-radius: 0.5rem; /* rounded-lg */
+  padding: 1.5rem; /* p-6 */
+  transition: box-shadow 0.2s;
+}
+
+.plan-card:hover {
+  box-shadow: 0 4px 20px rgb(14, 12, 22, 0.1); /* hover:shadow-lg */
+}
+
+/* Plan title */
+.plan-title {
+  font-size: 1.125rem; /* text-lg */
+  font-weight: 600; /* font-semibold */
+  color: #f9ebff; /* text-gray-900 */
+  margin-bottom: 0.5rem; /* mb-2 */
+}
+
+/* Plan price */
+.plan-price {
+  font-size: 2.5rem; /* text-2xl */
+  font-weight: 700; /* font-bold */
+  color: #685bed; /* text-indigo-600 */
+  margin-bottom: 1rem; /* mb-4 */
+}
+
+.plan-price span {
+  font-size: 1rem; /* text-sm */
+  font-weight: 400; /* font-normal */
+  color: #6b7280; /* text-gray-500 */
+}
+
+/* Features list */
+.features-list {
+  margin-bottom: 1.5rem; /* mb-6 */
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* gap-2 */
+}
+
+/* Feature text */
+.feature-text {
+  color: #e5e7eb; /* text-gray-700 */
+}
+
+/* Choose button */
+.choose-button {
+  width: 100%;
+  background-color: #291a68; /* bg-indigo-600 */
+  color: #e5e7eb; /* text-white */
+  padding: 0.5rem 1rem; /* px-4 py-2 */
+  border-radius: 0.5rem; /* rounded-lg */
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+.check-icon {
+  color: #4338ca;
+}
+.choose-button:hover {
+  background-color: #0e0827; /* hover:bg-indigo-700 */
+}
+
+.button-gap {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: auto;
+}

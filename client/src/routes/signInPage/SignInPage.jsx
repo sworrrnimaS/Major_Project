@@ -4,7 +4,7 @@ import "./signInPage.css";
 const SignInPage = () => {
   return (
     <div className="signInPage">
-      <SignIn signUpUrl="/sign-up" />
+      <SignIn signUpUrl="/sign-up" fallbackRedirectUrl="/dashboard" />
     </div>
   );
 };

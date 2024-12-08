@@ -17,14 +17,23 @@ const DashboardLayout = () => {
 
   if (!isLoaded)
     return (
-      <DNA
-        visible={true}
-        height="120"
-        width="120"
-        ariaLabel="dna-loading"
-        wrapperStyle={{}}
-        wrapperClass="dna-wrapper"
-      />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "80vh",
+        }}
+      >
+        <DNA
+          visible={true}
+          height="120"
+          width="120"
+          ariaLabel="dna-loading"
+          wrapperStyle={{}}
+          wrapperClass="dna-wrapper"
+        />
+      </div>
     );
 
   return (

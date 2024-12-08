@@ -18,7 +18,7 @@
     gap: 16px;
     text-align: center;
 
-    h1 {
+    h2 {
       font-size: 100px;
       background: linear-gradient(to right, #7051f2, #291a68);
       background-clip: text;
@@ -29,7 +29,9 @@
         font-size: 64px;
       }
     }
-    h3 {
+
+    h3,
+    h5 {
       font-weight: 400;
       max-width: 70%;
 
@@ -38,16 +40,53 @@
       }
     }
     a {
-      padding: 15px 25px;
-      background-color: #291a68;
-      color: white;
-      border-radius: 20px;
-      font-size: 14px;
-      margin-top: 20px;
+      color: #eee;
+      background: #7051f2;
+      margin: 10px;
+      padding: 16px 40px;
+      font-weight: 600;
+      border-radius: 3rem;
+      /* border: 2px solid #291a68; */
+      text-align: center;
+      text-transform: uppercase;
+      position: relative;
+      overflow: hidden;
+      transition: 0.3s;
+      z-index: 1;
 
-      &:hover {
-        background-color: white;
-        color: #291a68;
+      &::before {
+        position: absolute;
+        transition: 0.3s;
+        content: "";
+        width: 0;
+        bottom: 0;
+        background: #291a68;
+        height: 120%;
+        left: -10%;
+        transform: skewX(20deg);
+        z-index: -1;
+      }
+
+      &:hover::before {
+        width: 62%;
+      }
+      &::after {
+        position: absolute;
+        transition: 0.3s;
+        content: "";
+        width: 0;
+        right: 50%;
+        bottom: 0;
+        height: 4px;
+        background: #291a68;
+        height: 120%;
+        right: -10%;
+        transform: skewX(20deg);
+        z-index: -1;
+      }
+
+      &:hover::after {
+        width: 62%;
       }
     }
   }
@@ -133,6 +172,31 @@
     z-index: -1;
   }
 
+  .section {
+    padding: 4rem 0 2rem;
+  }
+  .container {
+    max-width: 968px;
+    margin-left: var(--mb-1-5);
+    margin-right: var(--mb-1-5);
+  }
+
+  .grid {
+    display: grid;
+  }
+  .sponsor__img {
+    width: 90px;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .sponsor__container {
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    row-gap: 5rem;
+    justify-items: center;
+    align-items: center;
+  }
+
   .terms {
     position: absolute;
     bottom: 20px;
@@ -153,6 +217,16 @@
       gap: 10px;
       color: #888;
       font-size: 10px;
+    }
+    .terms__link {
+      &:hover {
+        color: #ccc;
+      }
+    }
+    .privacy__link {
+      &:hover {
+        color: #ccc;
+      }
     }
   }
 }

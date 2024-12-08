@@ -7,7 +7,8 @@
   margin-bottom: 20px;
   background-color: #291a68;
   &:hover {
-    background-color: #2c2937;
+    background-color: #ececec !important;
+    color: #111 !important;
   }
 }
 
@@ -91,8 +92,8 @@
       }
 
       .upgrade-button:hover {
-        background-color: #e0e7ff; /* hover:bg-indigo-100 */
-        color: #2c2937;
+        background-color: #ececec; /* hover:bg-indigo-100 */
+        color: #111;
       }
 
       .upgrade-button .icon {

@@ -9,6 +9,11 @@
     align-items: center;
     justify-content: space-between;
 
+    span {
+      font-weight: 600;
+      font-size: larger;
+    }
+
     .logo {
       display: flex;
       align-items: center;

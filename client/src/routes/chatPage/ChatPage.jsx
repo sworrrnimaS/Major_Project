@@ -19,14 +19,22 @@ const ChatPage = () => {
       <div className="wrapper">
         <div className="chat">
           {isPending ? (
-            <DNA
-              visible={true}
-              height="40"
-              width="40"
-              ariaLabel="dna-loading"
-              wrapperStyle={{}}
-              wrapperClass="dna-wrapper"
-            />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignContent: "center",
+              }}
+            >
+              <DNA
+                visible={true}
+                height="60"
+                width="60"
+                ariaLabel="dna-loading"
+                wrapperStyle={{}}
+                wrapperClass="dna-wrapper"
+              />
+            </div>
           ) : error ? (
             "Something went wrong!"
           ) : (

@@ -77,6 +77,7 @@
       }
       button {
         background-color: #605e68;
+        color: #333;
         border-radius: 50%;
         border: none;
         cursor: pointer;
@@ -85,6 +86,10 @@
         align-items: center;
         justify-content: center;
         margin-right: 20px;
+        &:hover {
+          background-color: #ececec;
+          color: #111;
+        }
 
         /* img {
           width: 16px;

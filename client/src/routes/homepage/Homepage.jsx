@@ -8,13 +8,13 @@ const Homepage = () => {
   return (
     <div className="homepage">
       <div className="left">
-        <h1>BANKHELP AI</h1>
-        <h2>The Commercial Banking Assistant of Nepal</h2>
-        <h3>
+        <h2>BANKHELP AI</h2>
+        <h3>The Commercial Banking Assistant Chatbot System</h3>
+        <h5 style={{ color: "gray" }}>
           Intelligent banking assistant chatbot that leverages advanced NLP and
           semantic search capabilities to provide users with accurate
           information about banking services and inquiries.
-        </h3>
+        </h5>
         <Link to="/dashboard">Get Started</Link>
       </div>
       <div className="right">
@@ -30,7 +30,7 @@ const Homepage = () => {
                   ? "/human1.jpeg"
                   : typingStatus === "human2"
                   ? "/human2.jpeg"
-                  : "/bot.png"
+                  : "/bankbot.png"
               }
               alt=""
             />
@@ -52,7 +52,7 @@ const Homepage = () => {
                 () => {
                   setTypingStatus("bot");
                 },
-                "Bot: Oldest commercial bank in Nepal is Nepal Rastra Bank.",
+                "Bot: Oldest commercial bank in Nepal is Nepal Bank Limited.",
                 2000,
                 () => {
                   setTypingStatus("human1");
@@ -66,11 +66,25 @@ const Homepage = () => {
           </div>
         </div>
       </div>
+      {/* if we keep the banks logo */}
+      {/* <div className="sponsor section">
+        <div className="sponsor__container container grid">
+          <img src="assets/img/sponsor1.png" alt="" className="sponsor__img" />
+          <img src="assets/img/sponsor1.png" alt="" className="sponsor__img" />
+          <img src="assets/img/sponsor1.png" alt="" className="sponsor__img" />
+          <img src="assets/img/sponsor1.png" alt="" className="sponsor__img" />
+          <img src="assets/img/sponsor1.png" alt="" className="sponsor__img" />
+        </div>
+      </div> */}
       <div className="terms">
         <img src="/logo.png" alt="" />
         <div className="links">
-          <Link to="/">Terms of Service</Link>
-          <Link to="/">Privacy Policy</Link>
+          <Link to="/" className="terms__link">
+            Terms of Service
+          </Link>
+          <Link to="/" className="privacy__link">
+            Privacy Policy
+          </Link>
         </div>
       </div>
     </div>

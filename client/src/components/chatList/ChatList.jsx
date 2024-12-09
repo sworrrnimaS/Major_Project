@@ -6,6 +6,8 @@ import { DNA } from "react-loader-spinner";
 import { useState } from "react";
 import UpgradeModal from "../upgradeModal/UpgradeModal";
 
+// yaha chai different session id hisab le old conversation ko title dekhauna lai banako ho yo component, New Chat button hamle afai add gareko ho, Dashboard ma jastai POST request garna parcha New Chat button bata in session id generate garna
+
 const ChatList = () => {
   const [showModal, setShowModal] = useState(false);
   const { isPending, error, data } = useQuery({

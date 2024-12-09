@@ -5,6 +5,8 @@ import { DNA } from "react-loader-spinner";
 import "./dashboardLayout.css";
 import ChatList from "../../components/chatList/chatList";
 
+// Yo layout chai chat ko dashboard sanda related ho, authenticated user le matra chat ko dashboard access garna sakos bhanera banako yo layout
+
 const DashboardLayout = () => {
   const { userId, isLoaded } = useAuth();
   const navigate = useNavigate();

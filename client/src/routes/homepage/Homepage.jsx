@@ -3,6 +3,7 @@ import "./homepage.css";
 import { TypeAnimation } from "react-type-animation";
 import { useState } from "react";
 
+// Basically yo page chai landing page ho signin/signup garna agadi ko page
 const Homepage = () => {
   const [typingStatus, setTypingStatus] = useState("human1");
   return (

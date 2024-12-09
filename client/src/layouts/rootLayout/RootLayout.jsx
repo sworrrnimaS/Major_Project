@@ -4,6 +4,8 @@ import { SignedIn, UserButton } from "@clerk/clerk-react";
 import "./rootLayout.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+// Basically yo chai sabse baira ko layout ho, yaha logo, aniif logged in profile button and aru child routes render huncha
+
 // Import your Publishable Key
 
 const queryClient = new QueryClient();

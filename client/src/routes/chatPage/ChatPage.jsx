@@ -4,6 +4,8 @@ import { useLocation } from "react-router-dom";
 import "./chatPage.css";
 import { DNA } from "react-loader-spinner";
 
+// Yo page le chai specific chat history dekhaucha, which is identified by the session id in backend, basically purano session id hisab le purano chats haru herna lai chai yo ho, yaha GET garne ho session id hisab le old conversation
+
 const ChatPage = () => {
   const path = useLocation().pathname;
   const chatId = path.split("/").pop();

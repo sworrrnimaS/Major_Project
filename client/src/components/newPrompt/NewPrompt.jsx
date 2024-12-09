@@ -5,6 +5,8 @@ import { MoveUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import "./newPrompt.css";
 
+//esma chai user le query pathaune gareko cha, PUT garna ko karan chai, since euta session create bhayesi tesko history suru huncha even if new chat ani teta each QA pair halna we need this component
+
 const NewPrompt = ({ data }) => {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");

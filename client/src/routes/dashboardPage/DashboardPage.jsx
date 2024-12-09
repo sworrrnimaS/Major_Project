@@ -3,10 +3,13 @@ import "./dashboardPage.css";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
+//Yo page ma chai naya chat creation part huncha naya session create garna POST request pathako cha server lai, since paila chai New Chat button thenna, naya chat ko lagi session create garna euta query pathauna parthyo which is done by this page, natra QA pairs is handled by NewPrompt and dekhaune part is ChatPage
+
 const DashboardPage = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
+  // New chat session banaune part handle garne ho yaha bata
   const mutation = useMutation({
     mutationFn: async (text) => {
       return await fetch(`${import.meta.env.VITE_API_URL}/api/chats`, {

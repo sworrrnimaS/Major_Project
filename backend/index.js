@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
-import queryRouter from "./routes/query.route.js";
+import chatRouter from "./routes/chat.route.js";
+import sessionRouter from "./routes/session.route.js";
 import { connectDB } from "./lib/connectDB.js";
 import webhookRouter from "./routes/webhook.route.js";
 import cors from "cors";
@@ -18,7 +19,9 @@ app.use("/webhooks", webhookRouter);
 
 app.use(express.json());
 
-app.use("/query", queryRouter);
+app.use("/session", sessionRouter);
+
+app.use("/chat", chatRouter);
 
 // Global error handling middleware
 app.use((err, req, res, next) => {

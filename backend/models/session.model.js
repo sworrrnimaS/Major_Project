@@ -16,6 +16,10 @@ const sessionSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    sessionTitle: {
+      type: String,
+      default: "",
+    },
   },
   {
     timestamps: true,

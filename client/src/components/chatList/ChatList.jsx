@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 import { Link, useNavigate } from "react-router-dom";
 import { Crown, History, SquarePen } from "lucide-react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import "./chatList.css";
 import { DNA } from "react-loader-spinner";
 import { useState } from "react";
@@ -10,30 +11,58 @@ import UpgradeModal from "../upgradeModal/UpgradeModal";
 
 const ChatList = () => {
   const [showModal, setShowModal] = useState(false);
-  const { isPending, error, data } = useQuery({
-    queryKey: ["userChats"],
-    queryFn: () =>
-      fetch(`${import.meta.env.VITE_API_URL}/api/chats`, {
-        credentials: "include",
-      }).then((res) => res.json()),
-  });
-
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["userSessions"],
+    queryFn: async () => {
+      const response = await fetch(
+        `http://localhost:3000/session/getAllSessions/67559477b72c5089cf4edb1f`
+      );
+      const data = await response.json();
+      // console.log(data);
+      return data;
+    },
+  });
+
+  const mutation = useMutation({
+    mutationFn: async () => {
+      const response = await fetch(
+        "http://localhost:3000/session/createSession"
+      );
+      if (!response.ok) {
+        throw new Error("Failed to create session");
+      }
+      return response.json();
+    },
+    onSuccess: (data) => {
+      const sessionId = data.session._id;
+      queryClient.invalidateQueries({ queryKey: ["userSessions"] });
+      navigate(`/dashboard/chats/${sessionId}`);
+    },
+  });
+  const handleNewChat = function () {
+    mutation.mutate();
+  };
   return (
     <div className="chatList">
-      <Link to={`/dashboard/chats/newID`} className="new-chat">
-        New Chat
+      <button
+        className="new-chat"
+        onClick={handleNewChat}
+        disabled={mutation.isLoading} // Disable until session creation is finished
+      >
+        {mutation.isLoading ? "Creating..." : "New Chat"}
         <SquarePen />
-      </Link>
+      </button>
+
       <span className="title">DASHBOARD</span>
 
       <Link to="/dashboard">Explore BankHelp AI</Link>
       <hr />
       <span className="title">RECENT CHATS</span>
       <div className="list">
-        {isPending ? (
+        {isLoading ? (
           <div className="loader">
             <DNA
               visible={true}
@@ -47,24 +76,24 @@ const ChatList = () => {
         ) : error ? (
           "Something went wrong!"
         ) : (
-          data?.map((chat) => (
-            <Link to={`/dashboard/chats/${chat._id}`} key={chat.id}>
+          data?.sessions?.map((session) => (
+            <Link to={`/dashboard/chats/${session._id}`} key={session._id}>
               <History style={{ width: "16px", height: "16px" }} />
-              {chat.title}
+              {session._id}
             </Link>
           ))
         )}
       </div>
       <hr />
       <div className="upgrade">
-        <img src="/logo.png" alt="" />
-        <div className="texts">
+        {/* <img src="/logo.png" alt="" /> */}
+        {/* <div className="texts">
           <button className="upgrade-button" onClick={() => setShowModal(true)}>
             <Crown className="icon" />
             Upgrade Plan
           </button>
           <span>Get unlimited access to all features</span>
-        </div>
+        </div> */}
       </div>
       {showModal && <UpgradeModal onClose={() => setShowModal(false)} />}
     </div>

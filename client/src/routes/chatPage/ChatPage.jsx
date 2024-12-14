@@ -9,18 +9,27 @@ import { DNA } from "react-loader-spinner";
 const ChatPage = () => {
   const path = useLocation().pathname;
   const sessionId = path.split("/").pop();
-  const { isPending, error, data } = useQuery({
-    queryKey: ["session", sessionId],
+
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["chats", sessionId],
     queryFn: () =>
-      fetch(`${import.meta.env.VITE_API_URL}/chat/getAllChats/${sessionId}`, {
-        credentials: "include",
-      }).then((res) => res.json()),
+      fetch(`http://localhost:3000/chat/getAllChats/${sessionId}`).then(
+        (res) => {
+          if (!res.ok) {
+            throw new Error(`Error: ${res.status}`);
+          }
+          return res.json();
+        }
+      ),
+    // staleTime: 30000,
   });
+  console.log(data);
+
   return (
     <div className="chatPage">
       <div className="wrapper">
         <div className="chat">
-          {isPending ? (
+          {isLoading ? (
             <div
               style={{
                 display: "flex",
@@ -40,17 +49,15 @@ const ChatPage = () => {
           ) : error ? (
             "Something went wrong!"
           ) : (
-            data?.history?.map((message, index) => (
-              <div
-                key={index}
-                className={message.role === "user" ? "message user" : "message"}
-              >
-                {message.parts[0].text}
+            data?.map((message, index) => (
+              <div key={index}>
+                <div className="message user">{message?.query}</div>
+                <div className="message">{message?.response}</div>
               </div>
             ))
           )}
 
-          {data && <NewPrompt data={data} />}
+          {data && <NewPrompt data={data} sessionId={sessionId} />}
         </div>
       </div>
     </div>

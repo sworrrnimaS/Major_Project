@@ -1,127 +1,65 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { MoveUp } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import "./newPrompt.css";
 
 //esma chai user le query pathaune gareko cha, PUT garna ko karan chai, since euta session create bhayesi tesko history suru huncha even if new chat ani teta each QA pair halna we need this component
 
-const NewPrompt = ({ data }) => {
-  const [question, setQuestion] = useState("");
-  const [answer, setAnswer] = useState("");
+const NewPrompt = ({ data, sessionId }) => {
   const endRef = useRef(null);
   const formRef = useRef(null);
+  console.log(data);
 
   useEffect(() => {
     endRef.current.scrollIntoView({ behavior: "smooth" });
-  }, [data, question, answer]);
+  }, [data, sessionId]);
 
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async () => {
-      return await fetch(`${import.meta.env.VITE_API_URL}/chat/${data._id}`, {
-        method: "PUT",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          question: question.length ? question : undefined,
-          answer,
-        }),
-      }).then((res) => res.json());
-    },
-    onSuccess: () => {
-      queryClient
-        .invalidateQueries({ queryKey: ["session", data._id] })
-        .then(() => {
-          formRef.current.reset();
-          setQuestion("");
-          setAnswer("");
-        });
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
-
-  const simulateStreaming = (text) => {
-    const words = text.split(" ");
-    let index = 0;
-    const interval = setInterval(() => {
-      if (index < words.length) {
-        setAnswer((prev) => prev + " " + words[index++]); // Append words incrementally
-      } else {
-        clearInterval(interval);
-      }
-    }, 100); // Simulate delay
-  };
-
-  const add = async (text, isInitial) => {
-    if (!isInitial) setQuestion(text);
-
-    try {
-      const response = await fetch("api_url", {
+    mutationFn: async (newQuery) => {
+      const response = await fetch(`http://localhost:3000/chat/${sessionId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ text }),
+        body: JSON.stringify({
+          query: newQuery,
+        }),
       });
-
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error("Failed to send query");
       }
-
-      const data = await response.json();
-      simulateStreaming(data.answer || "No answer received");
-      console.log(data);
-      mutation.mutate(text);
-    } catch (e) {
-      console.error("Error fetching data", e);
-      setAnswer("Failed to answer. Please try again later.");
-    }
-  };
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["chats", sessionId] });
+    },
+    onError: (error) => {
+      console.log(error);
+      alert("Error sending query, please try again!");
+    },
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const text = e.target.text.value;
-    if (!text) return;
-    add(text, false);
+    const query = e.target.query.value;
+    console.log(query);
+    if (!query) return;
+    mutation.mutate(query);
     e.target.reset();
   };
-
-  // No need hasRun in production
-  const hasRun = useRef(false);
-  useEffect(() => {
-    if (!hasRun.current) {
-      if (data?.history?.length === 1) {
-        add(data.history[0].parts[0].text, true);
-      }
-    }
-    hasRun.current = true;
-  }, []);
-
   return (
     <>
-      {question && <div className="message user">{question}</div>}
-      {answer && <div className="message">{answer}</div>}
       <div className="endChat" ref={endRef}></div>
       <form className="newForm" onSubmit={handleSubmit} ref={formRef}>
-        <label htmlFor="file">
-          <MoveUp />
-        </label>
-        <input disabled id="file" type="file" multiple={false} hidden />
         <input
           type="text"
-          name="text"
-          onChange={(e) => setQuestion(e.target.value)}
-          value={question}
+          name="query"
           placeholder="Ask me anything about commercial banks in Nepal"
         />
-        <button type="submit" disabled={!question || mutation.isLoading}>
+        <button type="submit">
           <MoveUp className="upIcon" />
         </button>
       </form>

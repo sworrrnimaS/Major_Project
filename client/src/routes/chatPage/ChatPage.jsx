@@ -8,11 +8,11 @@ import { DNA } from "react-loader-spinner";
 
 const ChatPage = () => {
   const path = useLocation().pathname;
-  const chatId = path.split("/").pop();
+  const sessionId = path.split("/").pop();
   const { isPending, error, data } = useQuery({
-    queryKey: ["chat", chatId],
+    queryKey: ["session", sessionId],
     queryFn: () =>
-      fetch(`${import.meta.env.VITE_API_URL}/api/chat/${chatId}`, {
+      fetch(`${import.meta.env.VITE_API_URL}/chat/getAllChats/${sessionId}`, {
         credentials: "include",
       }).then((res) => res.json()),
   });

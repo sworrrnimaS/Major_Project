@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Crown, History, SquarePen } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import "./chatList.css";
 import { DNA } from "react-loader-spinner";
 import { useState } from "react";
@@ -17,6 +17,9 @@ const ChatList = () => {
         credentials: "include",
       }).then((res) => res.json()),
   });
+
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   return (
     <div className="chatList">

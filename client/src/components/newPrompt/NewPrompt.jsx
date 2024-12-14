@@ -21,24 +21,21 @@ const NewPrompt = ({ data }) => {
 
   const mutation = useMutation({
     mutationFn: async () => {
-      return await fetch(
-        `${import.meta.env.VITE_API_URL}/api/chats/${data._id}`,
-        {
-          method: "PUT",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            question: question.length ? question : undefined,
-            answer,
-          }),
-        }
-      ).then((res) => res.json());
+      return await fetch(`${import.meta.env.VITE_API_URL}/chat/${data._id}`, {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          question: question.length ? question : undefined,
+          answer,
+        }),
+      }).then((res) => res.json());
     },
     onSuccess: () => {
       queryClient
-        .invalidateQueries({ queryKey: ["chat", data._id] })
+        .invalidateQueries({ queryKey: ["session", data._id] })
         .then(() => {
           formRef.current.reset();
           setQuestion("");

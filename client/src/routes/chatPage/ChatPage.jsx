@@ -21,7 +21,7 @@ const ChatPage = () => {
           return res.json();
         }
       ),
-    // staleTime: 30000,
+    staleTime: 5000,
   });
   console.log(data);
 

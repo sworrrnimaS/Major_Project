@@ -11,6 +11,11 @@ export const createNewSession = async (req, res) => {
     });
 
     const savedSession = await session.save();
+    await User.findByIdAndUpdate(
+      user._id,
+      { $push: { sessionIds: savedSession._id } },
+      { new: true }
+    );
 
     res
       .status(200)

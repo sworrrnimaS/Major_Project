@@ -1,14 +1,16 @@
 /* eslint-disable no-unused-vars */
 import { useAuth } from "@clerk/clerk-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { DNA } from "react-loader-spinner";
 import "./dashboardLayout.css";
-import ChatList from "../../components/chatList/chatList";
+import ChatList from "../../components/chatList/ChatList";
 
 // Yo layout chai chat ko dashboard sanda related ho, authenticated user le matra chat ko dashboard access garna sakos bhanera banako yo layout
 
 const DashboardLayout = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   // const { userId, isLoaded } = useAuth();
   // const navigate = useNavigate();
 
@@ -41,9 +43,17 @@ const DashboardLayout = () => {
 
   return (
     <div className="dashboardLayout">
-      <div className="menu">
+      <button
+        className="mobile-menu-toggle"
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
+        ☰
+      </button>
+
+      <div className={`menu ${menuOpen ? "active" : ""}`}>
         <ChatList />
       </div>
+
       <div className="content">
         <Outlet />
       </div>

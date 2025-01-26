@@ -11,7 +11,7 @@
 
     span {
       font-weight: 600;
-      font-size: larger;
+      font-size: 1.5rem;
     }
 
     .logo {
@@ -30,5 +30,29 @@
   main {
     flex: 1;
     overflow: hidden;
+  }
+
+  /* Tab */
+  @media (max-width: 1024px) {
+    padding: 16px 40px;
+
+    header .logo span {
+      font-size: 1.3rem;
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    padding: 16px 20px;
+  }
+
+  header .logo {
+    img {
+      width: 28px;
+      height: 28px;
+    }
+    span {
+      font-size: 1.1rem;
+    }
   }
 }

@@ -3,12 +3,24 @@ import NewPrompt from "../../components/newPrompt/NewPrompt";
 import { useLocation } from "react-router-dom";
 import "./chatPage.css";
 import { DNA } from "react-loader-spinner";
+import { useEffect, useRef } from "react";
 
 // Yo page le chai specific chat history dekhaucha, which is identified by the session id in backend, basically purano session id hisab le purano chats haru herna lai chai yo ho, yaha GET garne ho session id hisab le old conversation
 
 const ChatPage = () => {
   const path = useLocation().pathname;
   const sessionId = path.split("/").pop();
+
+  const messageRef = useRef(null);
+
+  const scrollToBottom = () => {
+    requestAnimationFrame(() => {
+      messageRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
+    });
+  };
 
   const { isLoading, error, data } = useQuery({
     queryKey: ["chats", sessionId],
@@ -24,6 +36,12 @@ const ChatPage = () => {
     staleTime: 5000,
   });
   console.log(data);
+
+  useEffect(() => {
+    if (data) {
+      scrollToBottom();
+    }
+  }, [data]);
 
   return (
     <div className="chatPage">
@@ -52,13 +70,21 @@ const ChatPage = () => {
             data?.map((message, index) => (
               <div key={index}>
                 <div className="message user">{message?.query}</div>
-                <div className="message">{message?.response}</div>
+                {message?.error ? (
+                  <div className="message error">Error processing request</div>
+                ) : message?.isPending ? (
+                  <div className="message loading">
+                    <DNA visible={true} height="30" width="30" />
+                  </div>
+                ) : (
+                  <div className="message response">{message?.response}</div>
+                )}
               </div>
             ))
           )}
-
-          {data && <NewPrompt data={data} sessionId={sessionId} />}
+          <div ref={messageRef} />
         </div>
+        {data && <NewPrompt data={data} sessionId={sessionId} />}
       </div>
     </div>
   );

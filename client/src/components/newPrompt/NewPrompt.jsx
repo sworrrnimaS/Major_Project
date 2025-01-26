@@ -1,24 +1,44 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { MoveUp } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./newPrompt.css";
 
 //esma chai user le query pathaune gareko cha, PUT garna ko karan chai, since euta session create bhayesi tesko history suru huncha even if new chat ani teta each QA pair halna we need this component
 
 const NewPrompt = ({ data, sessionId }) => {
-  const endRef = useRef(null);
+  // const endRef = useRef(null);
   const formRef = useRef(null);
   console.log(data);
 
   useEffect(() => {
-    endRef.current.scrollIntoView({ behavior: "smooth" });
-  }, [data, sessionId]);
+    if (data?.length > 0) {
+      const lastMessage = data[data.length - 1];
+      if (!lastMessage?.response) {
+        scrollToBottom();
+      }
+    }
+  }, [data]);
+
+  const scrollToBottom = () => {
+    const chatContainer = document.querySelector(".chat");
+    if (chatContainer) {
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+  };
+
+  const [style, setStyle] = useState("");
+
+  // useEffect(() => {
+  //   endRef.current.scrollIntoView({ behavior: "smooth" });
+  // }, [data, sessionId]);
 
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: async (newQuery) => {
+      console.log(newQuery);
       const response = await fetch(`http://localhost:3000/chat/${sessionId}`, {
         method: "POST",
         headers: {
@@ -33,12 +53,47 @@ const NewPrompt = ({ data, sessionId }) => {
       }
       return response.json();
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["chats", sessionId] });
+    onMutate: async (newQuery) => {
+      await queryClient.cancelQueries({ queryKey: ["chats", sessionId] });
+
+      const previousChats = queryClient.getQueryData(["chats", sessionId]);
+
+      queryClient.setQueryData(["chats", sessionId], (oldData) => [
+        ...(oldData || []),
+        {
+          query: newQuery,
+          response: null,
+          isPending: true, // Add pending state
+          tempId: Date.now(), // Unique identifier
+        },
+      ]);
+
+      console.log(previousChats);
+
+      return { previousChats };
     },
-    onError: (error) => {
-      console.log(error);
+    onSuccess: (newResponse, variables, context) => {
+      // queryClient.invalidateQueries({ queryKey: ["chats", sessionId] });
+      console.log(newResponse);
+      queryClient.setQueryData(["chats", sessionId], (oldData) => {
+        return oldData.map((msg) =>
+          msg.tempId === context.tempId
+            ? { ...msg, ...newResponse, isPending: false }
+            : msg
+        );
+      });
+    },
+    onError: (error, newQuery, context) => {
+      console.log(newQuery);
+      queryClient.setQueryData(["chats", sessionId], (oldData) => {
+        return oldData.map((msg) =>
+          msg.query === newQuery ? { ...msg, error: true } : msg
+        );
+      });
       alert("Error sending query, please try again!");
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["chats", sessionId] });
     },
   });
 
@@ -47,19 +102,25 @@ const NewPrompt = ({ data, sessionId }) => {
     const query = e.target.query.value;
     console.log(query);
     if (!query) return;
-    mutation.mutate(query);
+
+    mutation.mutate(query, {
+      onSuccess: () => {
+        scrollToBottom();
+      },
+    });
     e.target.reset();
   };
   return (
     <>
-      <div className="endChat" ref={endRef}></div>
+      {/* <div className="endChat"></div> */}
       <form className="newForm" onSubmit={handleSubmit} ref={formRef}>
         <input
           type="text"
           name="query"
           placeholder="Ask me anything about commercial banks in Nepal"
+          onChange={(e) => setStyle(e.target.value)}
         />
-        <button type="submit">
+        <button type="submit" className={style ? "active" : ""}>
           <MoveUp className="upIcon" />
         </button>
       </form>

@@ -37,21 +37,23 @@ export const askQuery = (req, res) => {
   // When Python script finishes
   pythonProcess.on("close", (code) => {
     if (code === 0) {
-      let matches;
-      let match;
-      const regex = /data:{([^}]+)}/g;
-      while ((matches = regex.exec(output)) !== null) {
-        match = matches[0].split("data:")[1];
+
+      //For debugging:
+      // console.log(output)
+
+      let newOutput=output.trim((output.split("response")[1]))
+
+      const jsonStart = newOutput.indexOf("{");
+      const jsonEnd = newOutput.lastIndexOf("}") + 1;
+      const jsonString = newOutput.slice(jsonStart, jsonEnd);
+
+      const query=JSON.parse(jsonString).response.query
+      const answer=(JSON.parse(jsonString).response.answer).split('\n').join(' ')
+      const jsonObject={
+        "query":query,
+        "response":answer
       }
-      let jsonCompatibleString = match.replace(/'/g, '"');
-
-      jsonCompatibleString = jsonCompatibleString.replace(
-        /([{,]\s*)([a-zA-Z0-9_]+)(\s*:)/g,
-        '$1"$2"$3'
-      );
-
-      const jsonObject = JSON.parse(jsonCompatibleString);
-
+      
       saveChatAndUpdateSession(jsonObject, sessionId);
 
       async function saveChatAndUpdateSession(jsonObject, sessionId) {
@@ -63,7 +65,7 @@ export const askQuery = (req, res) => {
             sessionId: sessionId,
             user: user._id,
             query: jsonObject.query,
-            response: jsonObject.answer,
+            response: jsonObject.response,
           });
 
           const savedChat = await saveChat.save();

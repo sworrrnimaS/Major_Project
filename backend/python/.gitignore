@@ -1,0 +1,52 @@
+# Node.js modules
+node_modules/
+
+# Build output directories
+build/
+dist/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Temporary files and OS-specific files
+*.swp
+.DS_Store
+Thumbs.db
+
+# Coverage files
+coverage/
+
+# IDE and editor configurations
+.vscode/
+.idea/
+*.iml
+
+# React-specific
+*.cache/
+*.eslintcache
+
+# Generated files for React and Node.js
+*.map
+
+# Python-related
+__pycache__/
+*.pyc
+*.faiss
+
+# Dynamically generated JSON files
+flattened_data.json
+key_mappings.json
+vector_database.faiss
+
+# Dataset files
+banks.json

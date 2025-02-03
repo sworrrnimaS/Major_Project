@@ -34,6 +34,7 @@ const ChatPage = () => {
         }
       ),
     staleTime: 5000,
+    refetchOnWindowFocus: false, // Add this line to disable refetch on focus
   });
   console.log(data);
 

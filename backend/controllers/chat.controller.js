@@ -4,8 +4,9 @@ import { fileURLToPath } from "url";
 import Session from "../models/session.model.js";
 import Chat from "../models/chat.model.js";
 import User from "../models/user.model.js";
+import { generateSessionSummary } from "../helpers/generateSummary.js";
 
-export const askQuery = (req, res) => {
+export const askQuery = async (req, res) => {
   const userQuery = req.body.query;
   const sessionId = req.params.sessionId;
 
@@ -35,70 +36,118 @@ export const askQuery = (req, res) => {
   });
 
   // When Python script finishes
-  pythonProcess.on("close", (code) => {
+  pythonProcess.on("close", async (code) => {
     if (code === 0) {
-
       //For debugging:
       // console.log(output)
 
-      let newOutput=output.trim((output.split("response")[1]))
+      let newOutput = output.trim(output.split("response")[1]);
 
       const jsonStart = newOutput.indexOf("{");
       const jsonEnd = newOutput.lastIndexOf("}") + 1;
       const jsonString = newOutput.slice(jsonStart, jsonEnd);
 
-      const query=JSON.parse(jsonString).response.query
-      const answer=(JSON.parse(jsonString).response.answer).split('\n').join(' ')
-      const jsonObject={
-        "query":query,
-        "response":answer
-      }
-      
-      saveChatAndUpdateSession(jsonObject, sessionId);
+      // console.log(JSON.parse(jsonString).response);
 
-      async function saveChatAndUpdateSession(jsonObject, sessionId) {
-        try {
-          const clerkUserId = "user_2pw0QKQQ4YxSCfgD5ctwVKjfMo0";
-          const user = await User.findOne({ clerkUserId });
+      const query = JSON.parse(jsonString).response.query;
+      const answer = JSON.parse(jsonString).response.answer.replace(
+        /["\n]|\/\*.*?\*\//g,
+        " "
+      );
 
-          const saveChat = new Chat({
-            sessionId: sessionId,
-            user: user._id,
-            query: jsonObject.query,
-            response: jsonObject.response,
-          });
+      const jsonObject = {
+        query: query,
+        response: answer,
+      };
 
-          const savedChat = await saveChat.save();
+      const response = await saveChatAndUpdateSession(jsonObject, sessionId);
 
-          /*
-          
-          Send a query to summarise the response to another llm(another child process) and upsert the summary response to Session collection in database also generate the title for the first query 
-          
-          */
-
-          const updatedSession = await Session.findByIdAndUpdate(
-            sessionId,
-            { $push: { chatIds: savedChat._id } },
-            { new: true }
-          );
-
-          res.status(200).json({
-            message: `Chat created with Chat Id :${savedChat._id} and session with Session Id :${sessionId} updated!`,
-            data: jsonObject,
-          });
-          // console.log("Updated session with new chat:", updatedSession);
-        } catch (error) {
-          // console.error("Error saving chat or updating session:", error);
-          res
-            .status(500)
-            .json({ message: "Error saving chat or updating session:", error });
-        }
-      }
+      res.status(200).json(jsonObject);
     } else {
       res.status(500).send("Error processing query");
     }
   });
 };
+
+async function saveChatAndUpdateSession(jsonObject, sessionId) {
+  try {
+    const clerkUserId = "user_2pw0QKQQ4YxSCfgD5ctwVKjfMo0";
+    const user = await User.findOne({ clerkUserId });
+
+    const saveChat = new Chat({
+      sessionId: sessionId,
+      user: user._id,
+      query: jsonObject.query,
+      response: jsonObject.response,
+    });
+
+    const savedChat = await saveChat.save();
+
+    /*
+    
+    SUMMARY GENERATING LOGIC STARTS
+
+    */
+    const session = await Session.findById(sessionId);
+    let count = session.summaryCount;
+    let extractedSessionSummary = session.sessionSummary + " ";
+
+    if (count < 5) {
+      count += 1;
+      extractedSessionSummary += jsonObject.response;
+      await Session.findByIdAndUpdate(
+        { _id: sessionId },
+        {
+          $set: {
+            summaryCount: count,
+            sessionSummary: extractedSessionSummary,
+          },
+        },
+        { new: true }
+      );
+    }
+
+    if (count === 5) {
+      const generatedSummary = await generateSessionSummary(
+        sessionId,
+        extractedSessionSummary
+      );
+      if (generatedSummary) {
+        console.log(
+          `Summary has been generated and saved for session id ${sessionId}`
+        );
+      } else {
+        console.error("Session summary generation failed.");
+      }
+    }
+
+    /*
+    
+    SUMMARY GENERATING CODE AND LOGIC ENDS
+
+    */
+
+    const updatedSession = await Session.findByIdAndUpdate(
+      sessionId,
+      { $push: { chatIds: savedChat._id } },
+      { new: true }
+    );
+
+    const response = {
+      type: "success",
+      message: `Chat created with Chat Id :${savedChat._id} and session with Session Id :${sessionId} updated!`,
+    };
+    console.log(response);
+    //             data: jsonObject,
+  } catch (error) {
+    const response = {
+      type: "error from saveChatAndUpdateSession chat.controller.js",
+      message: "Error saving chat or updating session:",
+      error,
+    };
+    console.log(response);
+  }
+}
 
 export const getAllChatsForSession = async (req, res) => {
   const sessionId = req.params.sessionId;
@@ -106,4 +155,33 @@ export const getAllChatsForSession = async (req, res) => {
   const chats = await Chat.find({ sessionId });
 
   res.status(200).json(chats);
+};
+
+export const deleteAllChatsForSession = async (req, res) => {
+  const sessionId = req.params.sessionId;
+  try {
+    await Chat.deleteMany({ sessionId });
+
+    await Session.findOneAndUpdate(
+      { _id: sessionId },
+      { $set: { chatIds: [], sessionSummary: "" } },
+      { new: true }
+    );
+    console.log(
+      `Chats and session details for session id: ${sessionId} have been deleted`
+    );
+
+    res.status(200).json({
+      message: "All chats and session details cleared successfully",
+    });
+  } catch (err) {
+    console.error(
+      "Error occurred while deleting all chats and clearing session details:",
+      err
+    );
+    res.status(500).json({
+      message: "Error occured while deleting all chats for a session",
+      err,
+    });
+  }
 };

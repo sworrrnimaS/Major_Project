@@ -39,7 +39,7 @@ coverage/
 *.map
 
 # Python-related
-__pycache__/
+__pycache__
 *.pyc
 *.faiss
 

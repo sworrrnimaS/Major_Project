@@ -20,6 +20,11 @@ const sessionSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    summaryCount: {
+      type: Number,
+      default: 0,
+      required: true,
+    },
   },
   {
     timestamps: true,

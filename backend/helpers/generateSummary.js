@@ -39,7 +39,11 @@ const runPythonScript = async (answersParagraph) => {
   });
 };
 
-export const generateSessionSummary = async (sessionId, answersParagraph) => {
+export const generateSessionSummary = async (
+  sessionId,
+  answersParagraph,
+  summaryOfSummaries = false
+) => {
   try {
     const response = await runPythonScript(answersParagraph);
     //For debugging
@@ -59,17 +63,21 @@ export const generateSessionSummary = async (sessionId, answersParagraph) => {
           .split("Generated Summary Response:")[1] || ""
       : response;
 
-    await Session.findByIdAndUpdate(
-      sessionId.toString(),
-      {
-        $set: {
-          summaryCount: count,
-          sessionSummary: sessionSummary,
+    if (!summaryOfSummaries) {
+      await Session.findByIdAndUpdate(
+        sessionId.toString(),
+        {
+          $set: {
+            summaryCount: count,
+            sessionSummary: sessionSummary,
+          },
         },
-      },
-      { new: true }
-    );
-    return true;
+        { new: true }
+      );
+      return true;
+    } else {
+      return response;
+    }
   } catch (error) {
     console.error("Error running runPythonScript in generateSummary", error);
   }

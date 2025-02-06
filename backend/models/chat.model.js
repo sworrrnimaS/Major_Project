@@ -19,6 +19,9 @@ const chatSchema = new mongoose.Schema(
     response: {
       type: String,
     },
+    resolvedQuery: {
+      type: String,
+    },
   },
   {
     timestamps: true,

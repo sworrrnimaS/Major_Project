@@ -42,3 +42,25 @@ export const getAllSessions = async (req, res) => {
       .json({ message: "Fetching User Sessions failed: ", error: err.message });
   }
 };
+
+export const deleteAllSessionsForUser = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    await Session.deleteMany({ user: userId });
+
+    await User.findByIdAndUpdate(
+      { _id: userId },
+      { sessionIds: [] },
+      { new: true }
+    );
+    res
+      .status(200)
+      .json(`All Sessions successfully deleted for user with id : ${userId}`);
+  } catch (err) {
+    console.error("Error occured while deleting all Sessions for user: ", err);
+    res.status(500).json({
+      message: "Error occured while deleting all Sessions for user: ",
+      error: err,
+    });
+  }
+};

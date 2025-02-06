@@ -1,0 +1,52 @@
+[
+    {
+        "content": "bank_bank_4.nepal_investment_mega_bank_limited(nimb).interest_rates_information.deposit_products.savings_deposit.Corporate Benefit Savings Account",
+        "source": "3.50%",
+        "rank": 1
+    },
+    {
+        "content": "bank_bank_4.nepal_investment_mega_bank_limited(nimb).deposit_products[15].corporate_benefit_savings_account.features.interest_calculation",
+        "source": "None",
+        "rank": 2
+    },
+    {
+        "content": "bank_bank_4.nepal_investment_mega_bank_limited(nimb).interest_rates_information.deposit_products.savings_deposit.Triple Benefit Plus Savings Account",
+        "source": "3.50%",
+        "rank": 3
+    },
+    {
+        "content": "bank_bank_4.nepal_investment_mega_bank_limited(nimb).deposit_products[12].triple_benefit_plus_savings_account.features.interest_calculation",
+        "source": "None",
+        "rank": 4
+    },
+    {
+        "content": "bank_bank_4.nepal_investment_mega_bank_limited(nimb).interest_rates_information.deposit_products.fixed_deposit.Child Education Plan 10 Years Recurring Compounding",
+        "source": "7.00%",
+        "rank": 6
+    },
+    {
+        "content": "bank_bank_4.nepal_investment_mega_bank_limited(nimb).interest_rates_information.deposit_products.fixed_deposit.Retirement Plan 15 Years Recurring Compounding",
+        "source": "7.00%",
+        "rank": 8
+    },
+    {
+        "content": "bank_bank_4.nepal_investment_mega_bank_limited(nimb).interest_rates_information.deposit_products.fixed_deposit.Individual Above 2 Years",
+        "source": "7.00%",
+        "rank": 9
+    },
+    {
+        "content": "bank_bank_4.nepal_investment_mega_bank_limited(nimb).interest_rates_information.deposit_products.fixed_deposit.Individual Above 1 Year to 2 Years",
+        "source": "6.50%",
+        "rank": 10
+    },
+    {
+        "content": "bank_bank_1.everest_bank_limited(ebl).deposit_products[16].ebl_corporate_salary_account.features.interest_calculation",
+        "source": "Highly Attractive",
+        "rank": 11
+    },
+    {
+        "content": "bank_bank_1.everest_bank_limited(ebl).interest_rates_information.deposit_product.fixed_deposit.Individuals Above 2 years up to 5 years",
+        "source": "5.75%",
+        "rank": 5
+    }
+]

@@ -7,6 +7,7 @@ import User from "../models/user.model.js";
 import { handleLongTermMemory } from "../helpers/handleLongTermMemory.js";
 import { generateSessionSummary } from "../helpers/generateSummary.js";
 import { isLongTermMemoryQuery } from "../helpers/isLongTermMemory.js";
+import generateSessionTitle from "../helpers/generateSessionTitle.js";
 
 export const askQuery = async (req, res) => {
   const userQuery = req.body.query;
@@ -118,6 +119,22 @@ async function saveChatAndUpdateSession(jsonObject, sessionId) {
     if (count < 5) {
       count += 1;
       extractedSessionSummary += jsonObject.response;
+      if (count === 1) {
+        const generatedSessionTitle = generateSessionTitle(
+          extractedSessionSummary
+        );
+        console.log(generatedSessionTitle);
+        await Session.findByIdAndUpdate(
+          { _id: sessionId },
+          {
+            $set: {
+              sessionTitle: generatedSessionTitle,
+            },
+          },
+          { new: true }
+        );
+      }
+
       await Session.findByIdAndUpdate(
         { _id: sessionId },
         {

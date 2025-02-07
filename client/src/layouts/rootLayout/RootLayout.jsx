@@ -31,19 +31,12 @@ const RootLayout = () => {
     <div className="rootLayout">
       <header>
         <Link to="/" className="logo">
-          {theme === "dark" ? (
-            <img
-              src="/bankhelpsdark.png"
-              alt=""
-              style={{ width: "190px", height: "55px" }}
-            />
-          ) : (
-            <img
-              src="/bankhelps.png"
-              alt=""
-              style={{ width: "190px", height: "55px" }}
-            />
-          )}
+          <img
+            src="/bankhelps.png"
+            alt=""
+            style={{ width: "190px", height: "55px" }}
+          />
+
           {/* <img src="/logo.png" alt="" /> */}
           {/* <span>BankHelp AI</span> */}
         </Link>

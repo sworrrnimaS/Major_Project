@@ -18,7 +18,7 @@ const ChatList = () => {
     queryKey: ["userSessions"],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:3000/session/getAllSessions/67559477b72c5089cf4edb1f`
+        `http://localhost:3000/session/getAllSessions/675d80c336b7c233034b2e02`
       );
       const data = await response.json();
       // console.log(data);
@@ -78,7 +78,9 @@ const ChatList = () => {
         ) : (
           data?.sessions?.map((session) => (
             <Link to={`/dashboard/chats/${session._id}`} key={session._id}>
-              <History style={{ width: "16px", height: "16px" }} />
+              <History
+                style={{ width: "16px", height: "16px", marginRight: "8px" }}
+              />
               {session._id}
             </Link>
           ))

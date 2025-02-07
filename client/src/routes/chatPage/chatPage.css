@@ -46,6 +46,45 @@
         &.response {
           margin-left: 60px;
           align-self: flex-start;
+
+          p {
+            margin: 10px 0;
+            line-height: 1.5;
+          }
+
+          strong {
+            font-weight: 600;
+          }
+
+          em {
+            font-style: italic;
+          }
+
+          .code-block {
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 8px 0;
+            font-family: monospace;
+            overflow-x: auto;
+            white-space: pre-wrap;
+          }
+
+          .inline-code {
+            background-color: #f8f8f8;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+          }
+          .markdown-list {
+            list-style-type: disc;
+            padding-left: 24px;
+            margin: 8px 0;
+
+            li {
+              margin: 4px 0;
+            }
+          }
         }
 
         &.loading {

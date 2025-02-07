@@ -26,33 +26,33 @@ const ChatList = () => {
     },
   });
 
-  // Create initial session if none exist
-  useEffect(() => {
-    if (
-      !isLoading &&
-      !error &&
-      (!data?.sessions || data.sessions.length === 0)
-    ) {
-      createInitialSession();
-    }
-  }, [isLoading, error, data]);
+  // // Create initial session if none exist
+  // useEffect(() => {
+  //   if (
+  //     !isLoading &&
+  //     !error &&
+  //     (!data?.sessions || data.sessions.length === 0)
+  //   ) {
+  //     createInitialSession();
+  //   }
+  // }, [isLoading, error, data]);
 
-  // Function to create initial session
-  const createInitialSession = async () => {
-    try {
-      const response = await fetch(
-        "http://localhost:3000/session/createSession"
-      );
-      if (!response.ok) {
-        throw new Error("Failed to create session");
-      }
-      const newSessionData = await response.json();
-      queryClient.invalidateQueries({ queryKey: ["userSessions"] });
-      navigate(`/dashboard/chats/${newSessionData.session._id}`);
-    } catch (err) {
-      console.error("Error creating initial session:", err);
-    }
-  };
+  // // Function to create initial session
+  // const createInitialSession = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       "http://localhost:3000/session/createSession"
+  //     );
+  //     if (!response.ok) {
+  //       throw new Error("Failed to create session");
+  //     }
+  //     const newSessionData = await response.json();
+  //     queryClient.invalidateQueries({ queryKey: ["userSessions"] });
+  //     navigate(`/dashboard/chats/${newSessionData.session._id}`);
+  //   } catch (err) {
+  //     console.error("Error creating initial session:", err);
+  //   }
+  // };
 
   const mutation = useMutation({
     mutationFn: async () => {
@@ -110,7 +110,11 @@ const ChatList = () => {
             .map((session) => (
               <Link to={`/dashboard/chats/${session._id}`} key={session._id}>
                 <History
-                  style={{ width: "16px", height: "16px", marginRight: "8px" }}
+                  style={{
+                    width: "16px",
+                    height: "16px",
+                    marginRight: "8px",
+                  }}
                 />
                 {/* {session._id} */}
                 {session.sessionTitle || `New Chat`}

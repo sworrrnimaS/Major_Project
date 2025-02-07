@@ -123,7 +123,7 @@ async function saveChatAndUpdateSession(jsonObject, sessionId) {
         const generatedSessionTitle = generateSessionTitle(
           extractedSessionSummary
         );
-        console.log(generatedSessionTitle);
+        // console.log(generatedSessionTitle);
         await Session.findByIdAndUpdate(
           { _id: sessionId },
           {

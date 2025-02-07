@@ -5,6 +5,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { DNA } from "react-loader-spinner";
 import "./dashboardLayout.css";
 import ChatList from "../../components/chatList/ChatList";
+import { AlignJustify } from "lucide-react";
 
 // Yo layout chai chat ko dashboard sanda related ho, authenticated user le matra chat ko dashboard access garna sakos bhanera banako yo layout
 
@@ -47,7 +48,8 @@ const DashboardLayout = () => {
         className="mobile-menu-toggle"
         onClick={() => setMenuOpen(!menuOpen)}
       >
-        ☰
+        {/* ☰ */}
+        <AlignJustify />
       </button>
 
       <div className={`menu ${menuOpen ? "active" : ""}`}>

@@ -120,9 +120,7 @@ async function saveChatAndUpdateSession(jsonObject, sessionId) {
       count += 1;
       extractedSessionSummary += jsonObject.response;
       if (count === 1) {
-        const generatedSessionTitle = generateSessionTitle(
-          extractedSessionSummary
-        );
+        const generatedSessionTitle = generateSessionTitle(jsonObject.query);
         // console.log(generatedSessionTitle);
         await Session.findByIdAndUpdate(
           { _id: sessionId },

@@ -6,10 +6,12 @@ import { DNA } from "react-loader-spinner";
 import { useEffect, useRef } from "react";
 // import { MarkdownConverter } from "../../utils/textToMarkdown";
 import { convertToMarkdown } from "../../utils/textToMarkdown";
+import { useAuth } from "@clerk/clerk-react";
 
 // Yo page le chai specific chat history dekhaucha, which is identified by the session id in backend, basically purano session id hisab le purano chats haru herna lai chai yo ho, yaha GET garne ho session id hisab le old conversation
 
 const ChatPage = () => {
+  const { getToken } = useAuth();
   const path = useLocation().pathname;
   const sessionId = path.split("/").pop();
 
@@ -26,25 +28,36 @@ const ChatPage = () => {
 
   const { isLoading, error, data } = useQuery({
     queryKey: ["chats", sessionId],
-    queryFn: () =>
-      fetch(`http://localhost:3000/chat/getAllChats/${sessionId}`).then(
-        (res) => {
-          if (!res.ok) {
-            throw new Error(`Error: ${res.status}`);
-          }
-          return res.json();
+    queryFn: async () => {
+      const token = await getToken(); // Wait for the token
+
+      const res = await fetch(
+        `http://localhost:3000/chat/getAllChats/${sessionId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      ),
+      );
+
+      if (!res.ok) {
+        throw new Error(`Error: ${res.status}`);
+      }
+
+      // console.log(res.json().then((data) => console.log(data)));
+      return res.json();
+    },
     staleTime: 5000,
-    refetchOnWindowFocus: false, // Add this line to disable refetch on focus
+    refetchOnWindowFocus: false, // Disable refetch on window focus
   });
-  console.log(data);
 
   useEffect(() => {
     if (data) {
       scrollToBottom();
     }
   }, [data]);
+
+  // console.log(data);
 
   return (
     <div className="chatPage">
@@ -60,16 +73,18 @@ const ChatPage = () => {
             >
               <DNA
                 visible={true}
-                height="60"
-                width="60"
+                height="100"
+                width="100"
                 ariaLabel="dna-loading"
                 wrapperStyle={{}}
                 wrapperClass="dna-wrapper"
               />
             </div>
           ) : error ? (
-            "Something went wrong!"
+            "Something went wrong in ChatPage.jsx!"
           ) : (
+            typeof data !== "string" &&
+            data.length !== 0 &&
             data?.map((message, index) => (
               <div key={index}>
                 <div className="message user">{message?.query}</div>
@@ -91,7 +106,7 @@ const ChatPage = () => {
           )}
           <div ref={messageRef} />
         </div>
-        {data && <NewPrompt data={data} sessionId={sessionId} />}
+        {<NewPrompt data={data} sessionId={sessionId} />}
       </div>
     </div>
   );

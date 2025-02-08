@@ -2,15 +2,18 @@ import express from "express";
 import {
   createNewSession,
   getAllSessions,
-  deleteAllSessionsForUser,
+  deleteAllSessionsAndChatsForUser,
 } from "../controllers/session.controller.js";
 
 const router = express.Router();
 
 router.get("/createSession", createNewSession);
 
-router.get("/getAllSessions/:userId", getAllSessions);
+router.get("/getAllSessions", getAllSessions);
 
-router.delete("/deleteAllSessionsForUser/:userId", deleteAllSessionsForUser);
+router.delete(
+  "/deleteAllSessionsAndChatsForUser/:userId",
+  deleteAllSessionsAndChatsForUser
+);
 
 export default router;

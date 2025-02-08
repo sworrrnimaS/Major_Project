@@ -22,6 +22,10 @@ const chatSchema = new mongoose.Schema(
     resolvedQuery: {
       type: String,
     },
+    isLTM: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

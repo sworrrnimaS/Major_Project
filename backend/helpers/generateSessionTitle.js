@@ -15,6 +15,11 @@ export default function extractAdvancedTitle(paragraph) {
     "with",
     "used",
     "both",
+    "who",
+    "what",
+    "are",
+    "when",
+    "was",
   ];
 
   // Split paragraph into words and filter out stop words

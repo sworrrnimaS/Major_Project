@@ -4,15 +4,24 @@ import { Link, Outlet } from "react-router-dom";
 import "./rootLayout.css";
 import { useEffect, useState } from "react";
 import { Moon, SunMedium } from "lucide-react";
+// import { SignedOut, SignedIn, UserButton, useAuth } from "@clerk/clerk-react";
+import { SignedOut, SignedIn, UserButton } from "@clerk/clerk-react";
 
 // Basically yo chai sabse baira ko layout ho, yaha logo, aniif logged in profile button and aru child routes render huncha
 
 // Import your Publishable Key
 
 const RootLayout = () => {
+  // const { getToken } = useAuth();
+
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem("theme") || "dark";
   });
+
+  //for token checking purposes
+  // useEffect(() => {
+  //   getToken().then((token) => console.log(token));
+  // });
 
   useEffect(() => {
     if (theme === "dark") {
@@ -52,9 +61,15 @@ const RootLayout = () => {
               <Moon />
             )}
           </button>
-          {/* <SignedIn>
-              <UserButton />
-            </SignedIn> */}
+
+          <SignedOut>
+            <Link to="/sign-in" className="sign-button">
+              Login
+            </Link>
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
         </div>
       </header>
       <main>

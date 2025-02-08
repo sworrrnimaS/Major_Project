@@ -11,6 +11,8 @@
   --text-color: #0e0c16;
   --content-bg: #6aa1c0;
   --menu-bg: #b8d5e5;
+  --hover-bg: #b8d5e5;
+  --hover-text: #0e0c16;
   --border-color: #a4b1bb;
   --button-bg: #083453;
   --input-bg: #e0dddd;
@@ -22,7 +24,9 @@
   --bg-color: #0e0c16;
   --text-color: #ececec;
   --content-bg: #171422;
-  --menu-bg: #272537;
+  --menu-bg: #2f2c42;
+  --hover-bg: #b8d5e5;
+  --hover-text: #0e0c16;
   --border-color: #a4b1bb;
   --button-bg: #083453;
   --input-bg: #0d0b14;

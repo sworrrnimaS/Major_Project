@@ -29,8 +29,8 @@
     margin-bottom: 20px;
     transition: all 0.3s ease;
     &:hover {
-      background-color: var(--menu-bg) !important;
-      color: var(--text-color) !important;
+      background-color: var(--hover-bg) !important;
+      color: var(--hover-text) !important;
     }
   }
 
@@ -41,7 +41,7 @@
   hr {
     border: none;
     height: 2px;
-    background-color: var(--content-bg);
+    background-color: var(--border-color);
     opacity: 0.1;
     border-radius: 5px;
     margin: 20px 0px;
@@ -58,6 +58,7 @@
     flex-direction: column;
     /* overflow: scroll; */
     overflow: hidden;
+    gap: 2px;
     overflow-y: scroll;
   }
 
@@ -68,6 +69,10 @@
 
     &:hover {
       background-color: var(--menu-bg);
+    }
+    &.active {
+      background-color: var(--menu-bg); /* Highlight active session */
+      font-weight: bold; /* Optional: Add bold text for active session */
     }
   }
 

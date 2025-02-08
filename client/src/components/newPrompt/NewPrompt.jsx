@@ -122,6 +122,7 @@ const NewPrompt = ({ data, sessionId }) => {
           name="query"
           placeholder="Ask me anything about commercial banks in Nepal"
           onChange={(e) => setStyle(e.target.value)}
+          disabled={mutation.isPending}
         />
         <button type="submit" className={style ? "active" : ""}>
           <MoveUp className="upIcon" />

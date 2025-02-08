@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useAuth } from "@clerk/clerk-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { DNA } from "react-loader-spinner";
 import "./dashboardLayout.css";
@@ -11,6 +11,31 @@ import { AlignJustify } from "lucide-react";
 
 const DashboardLayout = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef(null);
+  const toggleRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        menuRef.current &&
+        toggleRef.current &&
+        !menuRef.current.contains(event.target) &&
+        !toggleRef.current.contains(event.target)
+      ) {
+        setMenuOpen(false);
+      }
+    };
+
+    if (menuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuOpen]);
 
   // const { userId, isLoaded } = useAuth();
   // const navigate = useNavigate();
@@ -45,6 +70,7 @@ const DashboardLayout = () => {
   return (
     <div className="dashboardLayout">
       <button
+        ref={toggleRef}
         className="mobile-menu-toggle"
         onClick={() => setMenuOpen(!menuOpen)}
       >
@@ -52,7 +78,7 @@ const DashboardLayout = () => {
         <AlignJustify />
       </button>
 
-      <div className={`menu ${menuOpen ? "active" : ""}`}>
+      <div ref={menuRef} className={`menu ${menuOpen ? "active" : ""}`}>
         <ChatList />
       </div>
 

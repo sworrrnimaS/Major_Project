@@ -8,6 +8,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-color: var(--bg-color);
+    /* transition: background-color 0.3s; */
 
     span {
       font-weight: 600;
@@ -19,10 +21,24 @@
       align-items: center;
       font-weight: bold;
       gap: 8px;
+    }
 
-      img {
-        width: 32px;
-        height: 32px;
+    .user {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
+      .theme-toggle {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 10px;
+        transition: transform 0.3s;
+
+        &:hover {
+          transform: scale(1.1);
+        }
       }
     }
   }

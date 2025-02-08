@@ -78,7 +78,7 @@ const Homepage = () => {
         </div>
       </div> */}
       <div className="terms">
-        <img src="/logo.png" alt="" />
+        <img src="/favicon.ico" alt="" />
         <div className="links">
           <Link to="/" className="terms__link">
             Terms of Service

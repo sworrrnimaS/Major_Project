@@ -7,8 +7,9 @@
 
   width: 60%;
   position: absolute;
-  bottom: 0;
-  background-color: #2c2937;
+  bottom: 10px;
+  /* background-color: var(--content-bg); */
+  background-color: var(--input-bg);
 
   border-radius: 20px;
   display: flex;
@@ -22,24 +23,24 @@
     border: none;
     outline: none;
     background-color: transparent;
-    color: #ececec;
+    color: var(--input-color);
   }
 
   button,
   label {
     border-radius: 50%;
-    background-color: #605e68;
+    background-color: var(--button-bg);
     border: none;
     padding: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #8a8a8a;
+    color: #e0dddd;
     cursor: pointer;
     &.active,
     &:hover {
-      background-color: #ececec;
-      color: #111;
+      background-color: var(--menu-bg);
+      color: var(--text-color);
     }
     /* img {
       width: 16px;

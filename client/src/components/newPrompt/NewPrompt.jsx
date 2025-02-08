@@ -10,7 +10,7 @@ import "./newPrompt.css";
 const NewPrompt = ({ data, sessionId }) => {
   // const endRef = useRef(null);
   const formRef = useRef(null);
-  console.log(data);
+  // console.log(data);
 
   useEffect(() => {
     if (data?.length > 0) {
@@ -38,7 +38,7 @@ const NewPrompt = ({ data, sessionId }) => {
 
   const mutation = useMutation({
     mutationFn: async (newQuery) => {
-      console.log(newQuery);
+      // console.log(newQuery);
       const response = await fetch(`http://localhost:3000/chat/${sessionId}`, {
         method: "POST",
         headers: {
@@ -82,6 +82,9 @@ const NewPrompt = ({ data, sessionId }) => {
             : msg
         );
       });
+      setTimeout(() => {
+        queryClient.invalidateQueries({ queryKey: ["userSessions"] });
+      }, 1000);
     },
     onError: (error, newQuery, context) => {
       console.log(newQuery);

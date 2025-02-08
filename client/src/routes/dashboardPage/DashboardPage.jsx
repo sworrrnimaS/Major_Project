@@ -3,15 +3,16 @@ import { MoveUp } from "lucide-react";
 import "./dashboardPage.css";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { DNA } from "react-loader-spinner";
 
 //Yo page ma chai naya chat creation part huncha naya session create garna POST request pathako cha server lai, since paila chai New Chat button thenna, naya chat ko lagi session create garna euta query pathauna parthyo which is done by this page, natra QA pairs is handled by NewPrompt and dekhaune part is ChatPage
 
 const DashboardPage = () => {
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [loading, setLoading] = useState(true);
+  const hasCreatedSession = useRef(false);
 
   // New chat session banaune part handle garne ho yaha bata
   const mutation = useMutation({
@@ -38,8 +39,10 @@ const DashboardPage = () => {
   });
 
   useEffect(() => {
-    // Create a session when component mounts
-    mutation.mutate();
+    if (!hasCreatedSession.current) {
+      hasCreatedSession.current = true; // Set flag to true
+      mutation.mutate(); // Create session
+    }
   }, []);
 
   if (loading) {

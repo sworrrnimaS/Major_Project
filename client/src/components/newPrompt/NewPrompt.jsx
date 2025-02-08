@@ -4,16 +4,18 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { MoveUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import "./newPrompt.css";
+import { useAuth } from "@clerk/clerk-react";
 
 //esma chai user le query pathaune gareko cha, PUT garna ko karan chai, since euta session create bhayesi tesko history suru huncha even if new chat ani teta each QA pair halna we need this component
 
 const NewPrompt = ({ data, sessionId }) => {
   // const endRef = useRef(null);
+  const { getToken } = useAuth();
   const formRef = useRef(null);
   // console.log(data);
 
   useEffect(() => {
-    if (data?.length > 0) {
+    if (data?.length > 0 && typeof data !== "string") {
       const lastMessage = data[data.length - 1];
       if (!lastMessage?.response) {
         scrollToBottom();
@@ -39,10 +41,12 @@ const NewPrompt = ({ data, sessionId }) => {
   const mutation = useMutation({
     mutationFn: async (newQuery) => {
       // console.log(newQuery);
+      const token = await getToken();
       const response = await fetch(`http://localhost:3000/chat/${sessionId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           query: newQuery,

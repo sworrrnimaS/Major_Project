@@ -7,10 +7,12 @@ import { DNA } from "react-loader-spinner";
 import { useEffect, useState } from "react";
 // import { useAuth } from "@clerk/clerk-react";
 import UpgradeModal from "../upgradeModal/UpgradeModal";
+import { useAuth } from "@clerk/clerk-react";
 
 // yaha chai different session id hisab le old conversation ko title dekhauna lai banako ho yo component, New Chat button hamle afai add gareko ho, Dashboard ma jastai POST request garna parcha New Chat button bata in session id generate garna
 
 const ChatList = () => {
+  const { getToken } = useAuth();
   const [showModal, setShowModal] = useState(false);
   const [isActive, setIsActive] = useState(null);
   const queryClient = useQueryClient();
@@ -20,20 +22,36 @@ const ChatList = () => {
   const { isLoading, error, data } = useQuery({
     queryKey: ["userSessions"],
     queryFn: async () => {
+      const token = await getToken();
       const response = await fetch(
-        `http://localhost:3000/session/getAllSessions/675d80c336b7c233034b2e02`
+        `http://localhost:3000/session/getAllSessions`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       const data = await response.json();
-      // console.log(data);
+      console.log(data);
+      if (data.status === "fail") {
+        navigate("/sign-in");
+      }
       return data;
     },
   });
 
   const mutation = useMutation({
     mutationFn: async () => {
+      const token = await getToken();
       const response = await fetch(
-        "http://localhost:3000/session/createSession"
+        "http://localhost:3000/session/createSession",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
+      console.log(response);
       if (!response.ok) {
         throw new Error("Failed to create session");
       }

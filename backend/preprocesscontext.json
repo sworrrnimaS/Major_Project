@@ -1,52 +1,52 @@
 [
     {
-        "content": "bank_bank_4.nepal_investment_mega_bank_limited(nimb).interest_rates_information.deposit_products.savings_deposit.Corporate Benefit Savings Account",
-        "source": "3.50%",
-        "rank": 1
-    },
-    {
-        "content": "bank_bank_4.nepal_investment_mega_bank_limited(nimb).deposit_products[15].corporate_benefit_savings_account.features.interest_calculation",
-        "source": "None",
-        "rank": 2
-    },
-    {
-        "content": "bank_bank_4.nepal_investment_mega_bank_limited(nimb).interest_rates_information.deposit_products.savings_deposit.Triple Benefit Plus Savings Account",
-        "source": "3.50%",
-        "rank": 3
-    },
-    {
-        "content": "bank_bank_4.nepal_investment_mega_bank_limited(nimb).deposit_products[12].triple_benefit_plus_savings_account.features.interest_calculation",
-        "source": "None",
-        "rank": 4
-    },
-    {
-        "content": "bank_bank_4.nepal_investment_mega_bank_limited(nimb).interest_rates_information.deposit_products.fixed_deposit.Child Education Plan 10 Years Recurring Compounding",
-        "source": "7.00%",
+        "content": "bank_bank_9.siddhartha_bank_limited(sbl).fees_and_charge_information.payment_solution_department.emi_loan_processing_fee_credit_card",
+        "source": "Rs. 1,000 or 1% of loan whichever is higher",
         "rank": 6
     },
     {
-        "content": "bank_bank_4.nepal_investment_mega_bank_limited(nimb).interest_rates_information.deposit_products.fixed_deposit.Retirement Plan 15 Years Recurring Compounding",
-        "source": "7.00%",
+        "content": "bank_bank_9.siddhartha_bank_limited(sbl).interest_rates_information.loan_products.Education Loan",
+        "source": "11.0% for up to 5 years, 11.5% for above 5 years",
+        "rank": 13
+    },
+    {
+        "content": "bank_bank_9.siddhartha_bank_limited(sbl).loan_products[1].siddhartha_education_loan.features.loan_limits",
+        "source": "Loan up to NPR 10 million.",
+        "rank": 1
+    },
+    {
+        "content": "bank_bank_9.siddhartha_bank_limited(sbl).loan_products[1].siddhartha_education_loan.features.loan_tenure",
+        "source": "Flexible repayment options, up to 15 years. Moratorium period up to 1 year or course duration (whichever is earlier).",
+        "rank": 2
+    },
+    {
+        "content": "bank_bank_9.siddhartha_bank_limited(sbl).loan_products[1].siddhartha_education_loan.required_documents[13]",
+        "source": "Copies of attested certificates of students evidencing completion of secondary level education, higher secondary education and above as per requirement",
+        "rank": 4
+    },
+    {
+        "content": "bank_bank_9.siddhartha_bank_limited(sbl).loan_products[1].siddhartha_education_loan.required_documents[5]",
+        "source": "Bank (deposit & loan) account statement of at least 6 months",
+        "rank": 5
+    },
+    {
+        "content": "bank_bank_9.siddhartha_bank_limited(sbl).loan_products[1].siddhartha_education_loan.eligibility_criteria.age_requirement",
+        "source": "None",
+        "rank": 7
+    },
+    {
+        "content": "bank_bank_9.siddhartha_bank_limited(sbl).loan_products[1].siddhartha_education_loan.description",
+        "source": "An education loan provided by Siddhartha Bank to support students' financial needs for studying abroad. Attractive & competitive interest rate. Personal counseling through the process. Simplified documentation requirements. Quick approval and transparent loan processing. Loan processing available from a wide range of branch networks. Loan remitted directly to educational institutions (Colleges/Universities) after disbursement.",
         "rank": 8
     },
     {
-        "content": "bank_bank_4.nepal_investment_mega_bank_limited(nimb).interest_rates_information.deposit_products.fixed_deposit.Individual Above 2 Years",
-        "source": "7.00%",
+        "content": "bank_bank_9.siddhartha_bank_limited(sbl).loan_products[1].siddhartha_education_loan.required_documents[7]",
+        "source": "PAN Certificate (Loan amount equal or above 5 million)",
         "rank": 9
     },
     {
-        "content": "bank_bank_4.nepal_investment_mega_bank_limited(nimb).interest_rates_information.deposit_products.fixed_deposit.Individual Above 1 Year to 2 Years",
-        "source": "6.50%",
-        "rank": 10
-    },
-    {
-        "content": "bank_bank_1.everest_bank_limited(ebl).deposit_products[16].ebl_corporate_salary_account.features.interest_calculation",
-        "source": "Highly Attractive",
+        "content": "bank_bank_9.siddhartha_bank_limited(sbl).loan_products[1].siddhartha_education_loan.eligibility_criteria.collateral_requirement",
+        "source": "None",
         "rank": 11
-    },
-    {
-        "content": "bank_bank_1.everest_bank_limited(ebl).interest_rates_information.deposit_product.fixed_deposit.Individuals Above 2 years up to 5 years",
-        "source": "5.75%",
-        "rank": 5
     }
 ]

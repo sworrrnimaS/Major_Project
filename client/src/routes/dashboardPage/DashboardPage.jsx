@@ -5,10 +5,12 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { DNA } from "react-loader-spinner";
+import { useAuth } from "@clerk/clerk-react";
 
 //Yo page ma chai naya chat creation part huncha naya session create garna POST request pathako cha server lai, since paila chai New Chat button thenna, naya chat ko lagi session create garna euta query pathauna parthyo which is done by this page, natra QA pairs is handled by NewPrompt and dekhaune part is ChatPage
 
 const DashboardPage = () => {
+  const { getToken } = useAuth();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(true);
@@ -17,8 +19,17 @@ const DashboardPage = () => {
   // New chat session banaune part handle garne ho yaha bata
   const mutation = useMutation({
     mutationFn: async () => {
+      const token = await getToken();
+
+      console.log(token);
+
       const response = await fetch(
-        `http://localhost:3000/session/createSession`
+        `http://localhost:3000/session/createSession`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       if (!response.ok) {
         throw new Error("Failed to create session");
@@ -27,9 +38,13 @@ const DashboardPage = () => {
     },
 
     onSuccess: (data) => {
-      const sessionId = data.session._id;
-      queryClient.invalidateQueries({ queryKey: ["userSessions"] }); // Update all session queries
-      navigate(`/dashboard/chats/${sessionId}`); //Navigate to ChatPage
+      if (data.status === "fail") {
+        return navigate("/sign-in");
+      } else {
+        const sessionId = data.session._id;
+        queryClient.invalidateQueries({ queryKey: ["userSessions"] }); // Update all session queries
+        return navigate(`/dashboard/chats/${sessionId}`); //Navigate to ChatPage
+      }
     },
 
     onError: (error) => {

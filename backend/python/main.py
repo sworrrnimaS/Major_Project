@@ -206,6 +206,7 @@ class BankAssistant:
                     "status": "success",
                     "response": calculation_result.get('human_response', 'Calculation completed'),
                     "calculation": calculation_result,
+                    "resolved_query": resolved_query,
                     "intent": intent_result['intent'],
                     "confidence": intent_result['confidence'],
                     "search_results": search_results_json

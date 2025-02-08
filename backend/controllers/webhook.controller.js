@@ -12,6 +12,8 @@ export const clerkWebHook = async (req, res) => {
     );
   }
 
+  // console.log(WEBHOOK_SECRET);
+
   const payload = req.body;
   const headers = req.headers;
 
@@ -28,6 +30,8 @@ export const clerkWebHook = async (req, res) => {
     });
   }
 
+  // console.log(evt.data);
+
   if (evt.type === "user.created") {
     const newUser = new User({
       clerkUserId: evt.data.id,
@@ -37,10 +41,12 @@ export const clerkWebHook = async (req, res) => {
     });
 
     await newUser.save();
+
+    console.log("New User created:", newUser);
   }
 
   if (evt.type === "user.updated") {
-    await User.findOneAndUpdate(
+    const updatedUser = await User.findOneAndUpdate(
       { clerkUserId: evt.data.id }, // Search for the user by clerkUserId
       {
         username:
@@ -50,6 +56,8 @@ export const clerkWebHook = async (req, res) => {
       },
       { upsert: true, new: true } // Create a new user if not found and return the updated document
     );
+
+    console.log("User has been updated", updatedUser);
   }
 
   if (evt.type === "user.deleted") {
@@ -60,6 +68,8 @@ export const clerkWebHook = async (req, res) => {
       await Session.deleteMany({ user: deletedUser._id });
       await Chat.deleteMany({ user: deletedUser._id });
     }
+
+    console.log("User has been deleted", deletedUser);
   }
 
   return res.status(200).json({

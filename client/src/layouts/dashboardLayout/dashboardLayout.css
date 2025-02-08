@@ -21,8 +21,8 @@
   .mobile-menu-toggle {
     display: none;
     position: fixed;
-    top: 18px;
-    right: 20px;
+    top: 22px;
+    right: 50px;
 
     z-index: 1000;
     background: transparent;
@@ -78,4 +78,13 @@
   justify-content: center;
   align-items: center;
   height: 100vh; /* Full viewport height */
+}
+
+.user {
+  align-items: center;
+  justify-content: center;
+}
+
+.sign-button {
+  transform: translateY(-25%);
 }

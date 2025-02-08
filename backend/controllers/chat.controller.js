@@ -13,8 +13,10 @@ export const askQuery = async (req, res) => {
   const userQuery = req.body.query;
   const sessionId = req.params.sessionId;
 
-  const clerkUserId = "user_2pw0QKQQ4YxSCfgD5ctwVKjfMo0";
+  const clerkUserId = req.auth.userId;
+
   const user = await User.findOne({ clerkUserId });
+  console.log(user);
 
   if (!userQuery) {
     return res.status(400).send("Query is required");
@@ -23,7 +25,10 @@ export const askQuery = async (req, res) => {
   // implement get latest query(resolved query) for a session to replace this Note if this is the first query put empty string
   let latestQueryForSession = async (sessionId) => {
     try {
-      const getLatestQuery = await Chat.findOne({ sessionId }).sort({
+      const getLatestQuery = await Chat.findOne({
+        sessionId,
+        isLTM: false,
+      }).sort({
         createdAt: -1,
       });
 
@@ -31,6 +36,7 @@ export const askQuery = async (req, res) => {
         console.log("This is the first query for this session");
         return "";
       }
+
       return getLatestQuery;
     } catch (err) {
       console.log("Error during fetching previous query and response", err);
@@ -64,6 +70,20 @@ export const askQuery = async (req, res) => {
     response = await handleLongTermMemory(previousData, sessionId, user);
     // console.log(response);
 
+    const session = await Session.findById(sessionId);
+    const userOfThisSession = await User.findById(session.user);
+    // console.log(userOfThisSession);
+
+    const chat = new Chat({
+      sessionId: sessionId,
+      user: userOfThisSession._id,
+      query: userQuery,
+      response: response.resolved_query.trim().replace(/["\r\n\\/]/g, ""),
+      resolvedQuery: "",
+      isLTM: true,
+    });
+    await chat.save();
+
     return res.status(200).json({
       status: "success",
       query: userQuery,
@@ -82,7 +102,8 @@ export const askQuery = async (req, res) => {
     resolvedQuery: response.resolvedQuery,
   };
   // console.log(conversationHistory);
-  await saveChatAndUpdateSession(conversationHistory, sessionId);
+  console.log(clerkUserId);
+  await saveChatAndUpdateSession(conversationHistory, sessionId, clerkUserId);
   // When Python script finishes
   res.status(200).json({
     status: "success",
@@ -91,10 +112,11 @@ export const askQuery = async (req, res) => {
   });
 };
 
-async function saveChatAndUpdateSession(jsonObject, sessionId) {
+async function saveChatAndUpdateSession(jsonObject, sessionId, clerkUserId) {
   try {
-    const clerkUserId = "user_2pw0QKQQ4YxSCfgD5ctwVKjfMo0";
+    console.log(clerkUserId);
     const user = await User.findOne({ clerkUserId });
+    console.log(user);
 
     const saveChat = new Chat({
       sessionId: sessionId,
@@ -114,12 +136,14 @@ async function saveChatAndUpdateSession(jsonObject, sessionId) {
 
     const session = await Session.findById(sessionId);
     let count = session.summaryCount;
+    let chatCount = await Chat.countDocuments({ sessionId });
+    console.log(chatCount);
     let extractedSessionSummary = session.sessionSummary + " ";
 
     if (count < 5) {
       count += 1;
       extractedSessionSummary += jsonObject.response;
-      if (count === 1) {
+      if (count === 1 && chatCount < 5) {
         const generatedSessionTitle = generateSessionTitle(jsonObject.query);
         // console.log(generatedSessionTitle);
         await Session.findByIdAndUpdate(
@@ -189,8 +213,19 @@ async function saveChatAndUpdateSession(jsonObject, sessionId) {
 
 export const getAllChatsForSession = async (req, res) => {
   const sessionId = req.params.sessionId;
+  const clerkUserId = req.auth.userId;
+
+  if (!clerkUserId) {
+    return res.status(401).json({
+      status: "fail",
+      message: "Not Authenticated to get all chats for session",
+    });
+  }
 
   const chats = await Chat.find({ sessionId });
+  if (chats.length === 0) {
+    return res.status(200).json([]);
+  }
 
   res.status(200).json(chats);
 };

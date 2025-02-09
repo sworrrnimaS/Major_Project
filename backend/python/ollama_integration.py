@@ -24,7 +24,8 @@ class ModelParameters:
         max_tokens: int = 3000,  # Increased for more comprehensive responses
         presence_penalty: float = 0.1,
         frequency_penalty: float = 0.1,
-        stop_sequences: Optional[List[str]] = None
+        stop_sequences: Optional[List[str]] = None,
+        context_window: bool = False 
     ):
         self.temperature = temperature
         self.top_p = top_p
@@ -33,7 +34,8 @@ class ModelParameters:
         self.max_tokens = max_tokens
         self.presence_penalty = presence_penalty
         self.frequency_penalty = frequency_penalty
-        self.stop_sequences = stop_sequences or []
+        self.stop_sequences = stop_sequences or [],
+        self.context_window = context_window
 
     def to_dict(self) -> Dict[str, Any]:
         return {k: v for k, v in self.__dict__.items() if v is not None}
@@ -213,6 +215,82 @@ class OllamaIntegration:
         Detailed Response:"""
         
         return prompt
+
+
+
+    def generate_summary_prompt(
+        self,
+        context: List[str],
+        summary_type: str = "general",
+        max_length: Optional[int] = None
+    ) -> str:
+        """
+        Generate a prompt for creating summaries of banking information
+        
+        Args:
+            context: List of context strings to summarize
+            summary_type: Type of summary to generate ('general', 'technical', 'customer')
+            max_length: Optional maximum length for the summary in words
+        
+        Returns:
+            Formatted prompt string for generating a summary
+        """
+        # Process context with enhanced extraction
+        processed_context = self._process_context(context)
+        
+        # Combine context with clear separation
+        context_text = "\n\n".join(f"[Section {i+1}]\n{ctx}" for i, ctx in enumerate(processed_context))
+        
+        # Define summary type specific instructions
+        summary_instructions = {
+            "general": """
+                - Create a comprehensive overview of the banking information
+                - Focus on key services, rates, and policies
+                - Use clear, non-technical language
+                - Highlight main points that would interest general customers
+            """,
+            "technical": """
+                - Provide detailed analysis of banking products and services
+                - Include specific rates, terms, and conditions
+                - Use precise banking terminology
+                - Focus on technical aspects and compliance requirements
+            """,
+            "customer": """
+                - Emphasize customer-facing features and benefits
+                - Highlight competitive advantages
+                - Include practical examples where relevant
+                - Focus on service accessibility and customer experience
+            """
+        }
+        
+        # Get specific instructions based on summary type
+        type_instructions = summary_instructions.get(
+            summary_type,
+            summary_instructions["general"]  # Default to general if type not found
+        )
+        
+        # Add length constraint if specified
+        length_instruction = f"\n- Limit the summary to approximately {max_length} words" if max_length else ""
+        
+        # Create the complete prompt
+        prompt = f"""As an expert banking analyst, create a structured summary of the following banking information.
+
+        CONTENT TO SUMMARIZE:
+        {context_text}
+
+        SUMMARY GUIDELINES:
+        {type_instructions}
+        - Organize information in a logical, flowing manner
+        - Maintain factual accuracy without adding external information
+        - Use clear section breaks for different topics
+        - Include all relevant numerical data and statistics
+        - Highlight any unique or distinguishing features{length_instruction}
+
+        Please provide a well-structured summary:"""
+        
+        return prompt
+
+
 
     def ask_model(
         self, 

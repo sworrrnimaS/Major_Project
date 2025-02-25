@@ -82,7 +82,7 @@ export const handleLongTermMemory = async (data, sessionId, user) => {
 
       const allSessionsSummaries = allSessionsForUser
         .map((session) =>
-          session.sessionSummary.trim().replace(/['"\r\n\\/]/g, "")
+          session.sessionSummary.trim().replace(/['"\r\n\\]/g, "")
         )
         .join("");
 
@@ -104,7 +104,6 @@ export const handleLongTermMemory = async (data, sessionId, user) => {
         summaryOfSummaries
           .trim()
           .replace(/"/g, "")
-          .replace(/\n/g, "")
           .split("Generated Summary Response:")[1] || "";
 
       break;

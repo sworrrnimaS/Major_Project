@@ -4,8 +4,7 @@ import { useLocation } from "react-router-dom";
 import "./chatPage.css";
 import { DNA } from "react-loader-spinner";
 import { useEffect, useRef } from "react";
-// import { MarkdownConverter } from "../../utils/textToMarkdown";
-import { convertToMarkdown } from "../../utils/textToMarkdown";
+import ResFormat from "../../utils/resFormat";
 import { useAuth } from "@clerk/clerk-react";
 
 // Yo page le chai specific chat history dekhaucha, which is identified by the session id in backend, basically purano session id hisab le purano chats haru herna lai chai yo ho, yaha GET garne ho session id hisab le old conversation
@@ -96,8 +95,9 @@ const ChatPage = () => {
                   </div>
                 ) : (
                   <div className="message response">
-                    {convertToMarkdown(message?.response)}
+                    {/* {convertToMarkdown(message?.response)} */}
                     {/* {message?.response} */}
+                    <ResFormat response={message?.response} />
                     {/* {MarkdownConverter(message?.response)} */}
                   </div>
                 )}

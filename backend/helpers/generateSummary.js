@@ -58,8 +58,7 @@ export const generateSessionSummary = async (
     let count = 0;
     const sessionSummary = response.includes("Generated Summary Response:")
       ? response
-          .replace(/"/g, "")
-          .replace(/\n/g, "")
+          .replace(/"/g, "") // Removes double quotes
           .split("Generated Summary Response:")[1] || ""
       : response;
 

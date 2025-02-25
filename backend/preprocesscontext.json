@@ -1,52 +1,52 @@
 [
     {
-        "content": "bank_bank_9.siddhartha_bank_limited(sbl).fees_and_charge_information.payment_solution_department.emi_loan_processing_fee_credit_card",
-        "source": "Rs. 1,000 or 1% of loan whichever is higher",
-        "rank": 6
-    },
-    {
-        "content": "bank_bank_9.siddhartha_bank_limited(sbl).interest_rates_information.loan_products.Education Loan",
-        "source": "11.0% for up to 5 years, 11.5% for above 5 years",
-        "rank": 13
-    },
-    {
-        "content": "bank_bank_9.siddhartha_bank_limited(sbl).loan_products[1].siddhartha_education_loan.features.loan_limits",
-        "source": "Loan up to NPR 10 million.",
+        "content": "bank_bank_8.rastriya_banijya_bank_limited(rbbl).interest_rates_information.loan_products.Mahalaxmi Home Loan Including Apartment",
+        "source": "Fixed Rate: 10.50% p.a. for up to 10 years, 10.75% p.a. for up to 15 years, 10.75% p.a. for up to 20 years",
         "rank": 1
     },
     {
-        "content": "bank_bank_9.siddhartha_bank_limited(sbl).loan_products[1].siddhartha_education_loan.features.loan_tenure",
-        "source": "Flexible repayment options, up to 15 years. Moratorium period up to 1 year or course duration (whichever is earlier).",
+        "content": "bank_bank_8.rastriya_banijya_bank_limited(rbbl).interest_rates_information.loan_products.Home Loan Including Apartment",
+        "source": "Fixed Rate: 10.25% p.a. for up to 5 years, 10.50% p.a. for up to 10 years, 10.75% p.a. for up to 15 years",
         "rank": 2
     },
     {
-        "content": "bank_bank_9.siddhartha_bank_limited(sbl).loan_products[1].siddhartha_education_loan.required_documents[13]",
-        "source": "Copies of attested certificates of students evidencing completion of secondary level education, higher secondary education and above as per requirement",
+        "content": "bank_bank_8.rastriya_banijya_bank_limited(rbbl).loan_products[20].apartment_loan.interest_rate",
+        "source": "Home Loan including apartment up to 5 years at 10.25%, Home Loan including apartment up to 10 years at 10.50%, Home Loan including apartment up to 15 years at 10.75%, Mahalaxmi Home Loan including apartment up to 10 years at 10.50%, Mahalaxmi Home Loan including apartment up to 15 years at 10.75%, Mahalaxmi Home Loan including apartment up to 20 years at 10.75%, Mortgage loans under institutional periodic loans have a fixed interest rate of 11.00% for a duration of 5 to 10 years and 12.00% for durations above 10 years",
+        "rank": 3
+    },
+    {
+        "content": "bank_bank_8.rastriya_banijya_bank_limited(rbbl).loan_products[20].apartment_loan.features.loan_tenure",
+        "source": "Home Loans including apartment are 5 years, 10 years, 15 years, Mahalaxmi Home Loans including apartment are 10 years, 15 years, 20 years, Mortgage loans under institutional periodic loans can be from 5 to 10 years or exceeds 10 years",
         "rank": 4
     },
     {
-        "content": "bank_bank_9.siddhartha_bank_limited(sbl).loan_products[1].siddhartha_education_loan.required_documents[5]",
-        "source": "Bank (deposit & loan) account statement of at least 6 months",
-        "rank": 5
+        "content": "bank_bank_15.prime_commercial_bank_nepal(pcbn).loan_products[11].prime_home_loan_repair.features.repayment_terms",
+        "source": "Monthly EMI repayable in 5 to 20 years",
+        "rank": 12
     },
     {
-        "content": "bank_bank_9.siddhartha_bank_limited(sbl).loan_products[1].siddhartha_education_loan.eligibility_criteria.age_requirement",
-        "source": "None",
-        "rank": 7
+        "content": "bank_bank_1.everest_bank_limited(ebl).loan_products[10].home_loan.eligibility_criteria.income_criteria",
+        "source": "EMI not exceeding 60% of disposable monthly income of borrower(s).",
+        "rank": 6
     },
     {
-        "content": "bank_bank_9.siddhartha_bank_limited(sbl).loan_products[1].siddhartha_education_loan.description",
-        "source": "An education loan provided by Siddhartha Bank to support students' financial needs for studying abroad. Attractive & competitive interest rate. Personal counseling through the process. Simplified documentation requirements. Quick approval and transparent loan processing. Loan processing available from a wide range of branch networks. Loan remitted directly to educational institutions (Colleges/Universities) after disbursement.",
+        "content": "bank_bank_17.global_ime_bank_limited(GIME).loan_products[4].home_loan.features.repayment_terms",
+        "source": "Flexible repayment (EMI or quarterly)",
         "rank": 8
     },
     {
-        "content": "bank_bank_9.siddhartha_bank_limited(sbl).loan_products[1].siddhartha_education_loan.required_documents[7]",
-        "source": "PAN Certificate (Loan amount equal or above 5 million)",
-        "rank": 9
+        "content": "bank_bank_9.siddhartha_bank_limited(sbl).fees_and_charge_information.payment_solution_department.emi_loan_processing_fee_credit_card",
+        "source": "Rs. 1,000 or 1% of loan whichever is higher",
+        "rank": 10
     },
     {
-        "content": "bank_bank_9.siddhartha_bank_limited(sbl).loan_products[1].siddhartha_education_loan.eligibility_criteria.collateral_requirement",
-        "source": "None",
+        "content": "bank_bank_11.laxmi_sunrise_bank_limited(lsl).loan_products[0].home_loan.features.repayment_terms",
+        "source": "Repayment on an Equal Monthly Installment (EMI) basis, with a tenure ranging from 3 to 20 years.",
         "rank": 11
+    },
+    {
+        "content": "bank_bank_2.himalayan_bank_limited(hbl).loan_products[0].home_loan.features.repayment_terms",
+        "source": "The loan is repaid on an Equal Monthly Installment (EMI) basis, with a tenure ranging from 3 to 25 years.",
+        "rank": 13
     }
 ]

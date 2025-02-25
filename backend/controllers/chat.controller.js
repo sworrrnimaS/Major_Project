@@ -78,7 +78,7 @@ export const askQuery = async (req, res) => {
       sessionId: sessionId,
       user: userOfThisSession._id,
       query: userQuery,
-      response: response.resolved_query.trim().replace(/["\r\n\\/]/g, ""),
+      response: response.resolved_query.trim().replace(/["\r]/g, ""),
       resolvedQuery: "",
       isLTM: true,
     });
@@ -87,7 +87,7 @@ export const askQuery = async (req, res) => {
     return res.status(200).json({
       status: "success",
       query: userQuery,
-      response: response.resolved_query.trim().replace(/["\r\n\\/]/g, ""),
+      response: response.resolved_query.trim().replace(/["\r]/g, ""),
     });
   } else {
     console.log("Regular query detected, processing with main.py");
@@ -306,9 +306,8 @@ const executePythonProcess = (data) => {
           .response.trim()
           .split("ModelResponse(text=")
           .join("")
-          .replace(/\r?\n/g, "")
-          .replace(/['"/]/g, "")
-          .replace(/\\n/g, "")
+          .replace(/\r?\n/g, "") // Removes actual newlines (line breaks)
+          .replace(/['"]/g, "") // Removes single and double quotes
           .split(", tokens_used=")[0];
 
         const jsonObject = {

@@ -307,7 +307,7 @@ const executePythonProcess = (data) => {
           .split("ModelResponse(text=")
           .join("")
           .replace(/\r?\n/g, "") // Removes actual newlines (line breaks)
-          .replace(/['"]/g, "") // Removes single and double quotes
+          // .replace(/['"]/g, "") // Removes single and double quotes
           .split(", tokens_used=")[0];
 
         const jsonObject = {
